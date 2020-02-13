@@ -1,0 +1,76 @@
+{ 
+    "notebooks": [
+        {
+            "path": "01a__Intro-Jupyter-Python.ipynb",
+            "name": "Intro to Jupyter-Python",
+            "class": "introductionitem",
+            "group": "Introduction",
+            "rank": 1
+        },{
+            "path": "02a__Intro-Swarm-viresclient.ipynb",
+            "name": "Intro to Swarm viresclient",
+            "class": "introductionitem",
+            "group": "Introduction",
+            "rank": 2
+        },{
+            "path": "02b__viresclient-Available-Data.ipynb",
+            "name": "introductionitem",
+            "group": "Introduction",
+            "rank": 3
+        },{
+            "path": "02z1__Template-Basic.ipynb",
+            "name": "VirES template",
+            "class": "virestemplate",
+            "group": "Notebook",
+            "rank": 0
+        },{
+            "path": "03a1_Demo-MAGx_LR_1B.ipynb",
+            "name": "MAGx_LR_1B",
+            "class": "viresdemo",
+            "group": "VirES Demos",
+            "rank": 1
+        },{
+            "path": "03b__Demo-EFIx_LP_1B.ipynb",
+            "name": "EFIx_LR_1B",
+            "class": "viresdemo",
+            "group": "VirES Demos",
+            "rank": 2
+        },{
+            "path": "03c__Demo-IPDxIRR_2F.ipynb",
+            "name": "IPDxIRR_2F",
+            "class": "viresdemo",
+            "group": "VirES Demos",
+            "rank": 3
+        },{
+            "path": "03d__Demo-TECxTMS_2F.ipynb",
+            "name": "TECxTMS_2F",
+            "class": "viresdemo",
+            "group": "VirES Demos",
+            "rank": 4
+        },{
+            "path": "03e1_Demo-FACxTMS_2F.ipynb",
+            "name": "TECxTMS_2F",
+            "class": "viresdemo",
+            "group": "VirES Demos",
+            "rank": 5
+        },{
+            "path": "03e2_Demo-FAC_TMS_2F.ipynb",
+            "name": "TECxTMS_2F",
+            "class": "viresdemo",
+            "group": "VirES Demos",
+            "rank": 6
+        },{
+            "path": "03f__Demo-EEFxTMS_2F.ipynb",
+            "name": "TECxTMS_2F",
+            "class": "viresdemo",
+            "group": "VirES Demos",
+            "rank": 7
+        },{
+            "path": "03g__Demo-IBIxTMS_2F.ipynb",
+            "name": "TECxTMS_2F",
+            "class": "viresdemo",
+            "group": "VirES Demos",
+            "rank": 8
+        }
+    ]
+}
