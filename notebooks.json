@@ -14,7 +14,8 @@
             "rank": 2
         },{
             "path": "02b__viresclient-Available-Data.ipynb",
-            "name": "introductionitem",
+            "name": "Intro to available data",
+            "class": "introductionitem",
             "group": "Introduction",
             "rank": 3
         },{
