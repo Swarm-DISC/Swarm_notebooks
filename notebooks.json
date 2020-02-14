@@ -13,6 +13,12 @@
             "group": "Introduction",
             "rank": 2
         },{
+            "path": "02c__viresclient-API.ipynb",
+            "name": "viresclient API document",
+            "class": "introductionitem",
+            "group": "Introduction",
+            "rank": 2
+        },{
             "path": "02b__viresclient-Available-Data.ipynb",
             "name": "Intro to available data",
             "class": "introductionitem",
@@ -50,25 +56,25 @@
             "rank": 4
         },{
             "path": "03e1_Demo-FACxTMS_2F.ipynb",
-            "name": "TECxTMS_2F",
+            "name": "FACxTMS_2F",
             "class": "viresdemo",
             "group": "VirES Demos",
             "rank": 5
         },{
             "path": "03e2_Demo-FAC_TMS_2F.ipynb",
-            "name": "TECxTMS_2F",
+            "name": "FAC_TMS_2F",
             "class": "viresdemo",
             "group": "VirES Demos",
             "rank": 6
         },{
             "path": "03f__Demo-EEFxTMS_2F.ipynb",
-            "name": "TECxTMS_2F",
+            "name": "EEFxTMS_2F",
             "class": "viresdemo",
             "group": "VirES Demos",
             "rank": 7
         },{
             "path": "03g__Demo-IBIxTMS_2F.ipynb",
-            "name": "TECxTMS_2F",
+            "name": "IBIxTMS_2F",
             "class": "viresdemo",
             "group": "VirES Demos",
             "rank": 8
