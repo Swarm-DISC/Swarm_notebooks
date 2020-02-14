@@ -5,53 +5,6 @@
 
 Notebooks demonstrating access to Swarm data for scientific analyses. For more info, and to view them, go to https://swarm-vre.readthedocs.io/en/staging/notebooks_preface.html
 
-## For developers:
-
-To access the executed branch (master):
-```
-git clone https://github.com/Swarm-DISC/Swarm_notebooks.git
-```
-but to update it, `git pull` will fail because of the history-rewriting detailed below. Instead force the latest version with:
-```
-git fetch
-git reset --hard origin/master
-```
-
-OR, access only the unexecuted branch (staging):
-```
-git clone --single-branch --branch staging https://github.com/Swarm-DISC/Swarm_notebooks.git
-```
-
-### Managing the git branches
-
-There are two branches: `staging` for clean commits (i.e. **without cell outputs** in the notebooks), and `master` which is periodically rebased to `staging` with an amended commit containing the *executed state* of the notebooks (i.e. **including cell outputs** for convenient viewing).
-
-[(Reference for the motivation and more detail)](https://mg.readthedocs.io/git-jupyter.html#making-a-change)
-
-To add or update a notebook, switch to the staging branch:
-
-```
-git checkout staging
-```
-
-then do some work on notebook(s), clear all outputs and save them, (or use [nbstripout](https://github.com/kynan/nbstripout)). *Ensure they are without cell outputs*, then commit the changes:
-
-```
-git add ...
-git commit ...
-git push ...
-```
-
-After some number of commits on staging, and you are ready to deploy the executed state on master, then: rebase the master branch to the current staging, execute the notebooks, amend the commit on master
-
-```
-git checkout master
-git rebase -X ours staging
- <manually execute the notebooks, or use nbconvert>
-git commit -a --amend
-git push --force
-```
-
 ### Execution of notebooks (nbconvert)
 
 Convert to executed state in place:
