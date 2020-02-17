@@ -19,6 +19,12 @@
             "group": "Introduction",
             "rank": 3
         },{
+            "path": "02d__viresclient-Large-Data.ipynb",
+            "name": "Working with large data volumes",
+            "class": "introductionitem",
+            "group": "Introduction",
+            "rank": 4
+        }{
             "path": "02b__viresclient-Available-Data.ipynb",
             "name": "Intro to available data",
             "class": "introductionitem",
