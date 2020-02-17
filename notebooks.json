@@ -37,47 +37,53 @@
             "group": "VirES Demos",
             "rank": 1
         },{
+            "path": "03a2_Demo-MAGx_HR_1B.ipynb",
+            "name": "MAGx_HR_1B",
+            "class": "viresdemo",
+            "group": "VirES Demos",
+            "rank": 2
+        },{
             "path": "03b__Demo-EFIx_LP_1B.ipynb",
             "name": "EFIx_LR_1B",
             "class": "viresdemo",
             "group": "VirES Demos",
-            "rank": 2
+            "rank": 3
         },{
             "path": "03c__Demo-IPDxIRR_2F.ipynb",
             "name": "IPDxIRR_2F",
             "class": "viresdemo",
             "group": "VirES Demos",
-            "rank": 3
+            "rank": 4
         },{
             "path": "03d__Demo-TECxTMS_2F.ipynb",
             "name": "TECxTMS_2F",
             "class": "viresdemo",
             "group": "VirES Demos",
-            "rank": 4
+            "rank": 5
         },{
             "path": "03e1_Demo-FACxTMS_2F.ipynb",
             "name": "FACxTMS_2F",
             "class": "viresdemo",
             "group": "VirES Demos",
-            "rank": 5
+            "rank": 6
         },{
             "path": "03e2_Demo-FAC_TMS_2F.ipynb",
             "name": "FAC_TMS_2F",
             "class": "viresdemo",
             "group": "VirES Demos",
-            "rank": 6
+            "rank": 7
         },{
             "path": "03f__Demo-EEFxTMS_2F.ipynb",
             "name": "EEFxTMS_2F",
             "class": "viresdemo",
             "group": "VirES Demos",
-            "rank": 7
+            "rank": 8
         },{
             "path": "03g__Demo-IBIxTMS_2F.ipynb",
             "name": "IBIxTMS_2F",
             "class": "viresdemo",
             "group": "VirES Demos",
-            "rank": 8
+            "rank": 9
         },{
             "path": "04a1_Geomag-Models-VirES.ipynb",
             "name": "Model residuals through VirES",
