@@ -90,6 +90,12 @@
             "class": "viresdemo",
             "group": "Geomagnetic Models",
             "rank": 2
+        },{
+            "path": "05a1_Polar-Region-Plots.ipynb",
+            "name": "Polar Region Plots",
+            "class": "viresdemo",
+            "group": "Ionosphere",
+            "rank": 1
         }
     ]
 }
