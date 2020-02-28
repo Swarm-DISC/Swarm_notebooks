@@ -7,29 +7,35 @@
             "group": "Introduction",
             "rank": 1
         },{
+            "path": "01b1_Pandas-and-Plots.ipynb",
+            "name": "Intro to Pandas and Plotting",
+            "class": "introductionitem",
+            "group": "Introduction",
+            "rank": 2
+        },{
             "path": "02a__Intro-Swarm-viresclient.ipynb",
             "name": "Intro to Swarm viresclient",
             "class": "introductionitem",
             "group": "Introduction",
-            "rank": 2
+            "rank": 3
         },{
             "path": "02c__viresclient-API.ipynb",
             "name": "viresclient API document",
             "class": "introductionitem",
             "group": "Introduction",
-            "rank": 3
+            "rank": 4
         },{
             "path": "02d__viresclient-Large-Data.ipynb",
             "name": "Working with large data volumes",
             "class": "introductionitem",
             "group": "Introduction",
-            "rank": 4
+            "rank": 5
         },{
             "path": "02b__viresclient-Available-Data.ipynb",
             "name": "Intro to available data",
             "class": "introductionitem",
             "group": "Introduction",
-            "rank": 4
+            "rank": 6
         },{
             "path": "02z1__Template-Basic.ipynb",
             "name": "VirES template",
