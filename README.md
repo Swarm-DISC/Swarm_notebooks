@@ -21,6 +21,12 @@ By default, errors will cause nbconvert to halt. To allow errors (and execution 
 jupyter nbconvert --to notebook --inplace --execute --ExecutePreprocessor.allow_errors=True 02a__Intro-Swarm-viresclient.ipynb
 ```
 
+To run most of them (skipping 02a and 02c), using a timeout of 10 minutes (the default is 30s):
+
+```
+jupyter nbconvert --to notebook --inplace --execute 01* 02b* 02d* 03* 04* 05* --ExecutePreprocessor.timeout=600
+```
+
 > To be determined whether the automated execution works well enough.
 
 ### Testing of notebooks (nbval)
