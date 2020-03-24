@@ -8,7 +8,7 @@
             "rank": 1
         },{
             "path": "01b1_Pandas-and-Plots.ipynb",
-            "name": "Intro to Pandas and Plotting",
+            "name": "Pandas: plot statistics, errors ...",
             "class": "introductionitem",
             "group": "Introduction",
             "rank": 2
@@ -46,55 +46,55 @@
             "path": "03a1_Demo-MAGx_LR_1B.ipynb",
             "name": "MAGx_LR_1B",
             "class": "viresdemo",
-            "group": "VirES Demos",
+            "group": "Swarm Product Demos",
             "rank": 1
         },{
             "path": "03a2_Demo-MAGx_HR_1B.ipynb",
             "name": "MAGx_HR_1B",
             "class": "viresdemo",
-            "group": "VirES Demos",
+            "group": "Swarm Product Demos",
             "rank": 2
         },{
             "path": "03b__Demo-EFIx_LP_1B.ipynb",
-            "name": "EFIx_LR_1B",
+            "name": "EFIx_LP_1B",
             "class": "viresdemo",
-            "group": "VirES Demos",
+            "group": "Swarm Product Demos",
             "rank": 3
         },{
             "path": "03c__Demo-IPDxIRR_2F.ipynb",
             "name": "IPDxIRR_2F",
             "class": "viresdemo",
-            "group": "VirES Demos",
+            "group": "Swarm Product Demos",
             "rank": 4
         },{
             "path": "03d__Demo-TECxTMS_2F.ipynb",
             "name": "TECxTMS_2F",
             "class": "viresdemo",
-            "group": "VirES Demos",
+            "group": "Swarm Product Demos",
             "rank": 5
         },{
             "path": "03e1_Demo-FACxTMS_2F.ipynb",
-            "name": "FACxTMS_2F",
+            "name": "FACxTMS_2F (single sat)",
             "class": "viresdemo",
-            "group": "VirES Demos",
+            "group": "Swarm Product Demos",
             "rank": 6
         },{
             "path": "03e2_Demo-FAC_TMS_2F.ipynb",
-            "name": "FAC_TMS_2F",
+            "name": "FAC_TMS_2F (dual) + 2D-plot",
             "class": "viresdemo",
-            "group": "VirES Demos",
+            "group": "Swarm Product Demos",
             "rank": 7
         },{
             "path": "03f__Demo-EEFxTMS_2F.ipynb",
             "name": "EEFxTMS_2F",
             "class": "viresdemo",
-            "group": "VirES Demos",
+            "group": "Swarm Product Demos",
             "rank": 8
         },{
             "path": "03g__Demo-IBIxTMS_2F.ipynb",
             "name": "IBIxTMS_2F",
             "class": "viresdemo",
-            "group": "VirES Demos",
+            "group": "Swarm Product Demos",
             "rank": 9
         },{
             "path": "04a1_Geomag-Models-VirES.ipynb",
@@ -104,7 +104,7 @@
             "rank": 1
         },{
             "path": "04b1_Geomag-Models-eoxmagmod.ipynb",
-            "name": "Forward evaluation of models",
+            "name": "Forward evaluation + isolines",
             "class": "viresdemo",
             "group": "Geomagnetic Models",
             "rank": 2
