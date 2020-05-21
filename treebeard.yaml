@@ -1,0 +1,12 @@
+secret:
+# .env contains VIRES_TOKEN=***
+  - .env
+ignore:
+  - __pycache__
+  - .git
+  - src
+  - "**/.ipynb_checkpoints"
+  - "**/*pyc"
+  - "**.vscode"
+  - "MagneticModel*"
+schedule: 'weekly'

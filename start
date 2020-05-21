@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+set -x
+
+pip install MagneticModel/eoxmagmod
+python -m set_token
+
+export CDF_LIB=/srv/conda/envs/notebook/lib
+
+treebeard run --dockerless --confirm

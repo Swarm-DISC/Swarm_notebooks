@@ -1,0 +1,24 @@
+channels:
+  - conda-forge
+dependencies:
+  # for eoxmagmod
+  - fortran-compiler
+  - cxx-compiler
+  - make
+  - conda-build
+  - conda-verify
+  # others
+  - numpy
+  - scipy
+  - xarray
+  - matplotlib
+  - gdal
+  - cartopy
+  - cdflib
+  - pip
+  - pip:
+      - treebeard
+      - watermark
+      - viresclient
+      - python-dotenv
+      - hdf5storage # for chaosmagpy
