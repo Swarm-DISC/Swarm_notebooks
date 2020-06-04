@@ -114,7 +114,7 @@
             "class": "viresdemo",
             "group": "Geomagnetic Models",
             "rank": 3
-        }{
+        },{
             "path": "05a1_Polar-Region-Plots.ipynb",
             "name": "Polar region plots",
             "class": "viresdemo",
