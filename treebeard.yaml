@@ -10,3 +10,4 @@ ignore:
   - "**.vscode"
   - "MagneticModel*"
 schedule: 'weekly'
+cell_execution_timeout_seconds: 600
