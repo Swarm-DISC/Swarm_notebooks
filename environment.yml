@@ -15,6 +15,7 @@ dependencies:
   - gdal
   - cartopy
   - cdflib
+  - dask
   - pip
   - pip:
       - treebeard
