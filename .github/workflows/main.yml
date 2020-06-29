@@ -1,0 +1,19 @@
+on:
+  push:
+  schedule:
+    - cron: "0 0 * * 0" # weekly
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    name: Run treebeard
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - uses: treebeardtech/treebeard@master
+        with:
+          api-key: ${{ secrets.TREEBEARD_API_KEY }}
+          docker-username: "treebeardtech"
+          docker-password: "${{ secrets.DOCKER_PASSWORD }}"
+          docker-image-name: "treebeardtech/swarm_notebooks"
+        env:
+          TB_VIRES_TOKEN: "${{ secrets.VIRES_TOKEN }}"
