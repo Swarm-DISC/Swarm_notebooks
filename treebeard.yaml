@@ -1,6 +1,3 @@
-secret:
-  # .env contains VIRES_TOKEN=***
-  - .env
 ignore:
   - __pycache__
   - .git
@@ -9,5 +6,4 @@ ignore:
   - "**/*pyc"
   - "**.vscode"
   - "MagneticModel*"
-schedule: "weekly"
 cell_execution_timeout_seconds: 1200

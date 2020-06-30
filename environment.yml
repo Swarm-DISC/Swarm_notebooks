@@ -18,7 +18,6 @@ dependencies:
   - dask
   - pip
   - pip:
-      - treebeard
       - watermark
       - viresclient
       - python-dotenv
