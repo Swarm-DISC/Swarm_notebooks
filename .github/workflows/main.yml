@@ -12,8 +12,8 @@ jobs:
       - uses: treebeardtech/treebeard@master
         with:
           api-key: ${{ secrets.TREEBEARD_API_KEY }}
-          docker-username: "treebeardtech"
-          docker-password: "${{ secrets.DOCKER_PASSWORD }}"
-          docker-image-name: "treebeardtech/swarm_notebooks"
+          # docker-username: "treebeardtech"
+          # docker-password: "${{ secrets.DOCKER_PASSWORD }}"
+          # docker-image-name: "treebeardtech/swarm_notebooks"
         env:
           TB_VIRES_TOKEN: "${{ secrets.VIRES_TOKEN }}"
