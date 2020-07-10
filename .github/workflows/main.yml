@@ -17,3 +17,4 @@ jobs:
           docker-image-name: "swarmdisc/swarm_notebooks"
         env:
           TB_VIRES_TOKEN: "${{ secrets.VIRES_TOKEN }}"
+	  TB_VIRES_TOKEN_STAGINGDISC: "${{ secrets.VIRES_TOKEN_STAGINGDISC  }}"
