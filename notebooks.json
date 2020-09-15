@@ -116,10 +116,16 @@
             "rank": 2
         },{
             "path": "notebooks/04c1_Geomag-Ground-Data-FTP.ipynb",
-            "name": "Geomagnetic ground obs",
+            "name": "Ground observatories - FTP",
             "class": "viresdemo",
             "group": "Geomagnetic Models",
             "rank": 3
+        },{
+            "path": "notebooks/04c2_Geomag-Ground-Data-VirES.ipynb",
+            "name": "Ground observatories - VirES",
+            "class": "viresdemo",
+            "group": "Geomagnetic Models",
+            "rank": 4
         },{
             "path": "notebooks/05a1_Polar-Region-Plots.ipynb",
             "name": "Polar region plots",
