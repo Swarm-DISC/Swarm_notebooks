@@ -1,5 +1,12 @@
 on:
   push:
+    branches:
+      - master
+      - staging
+  pull_request:
+    branches:
+      - master
+      - staging
   schedule:
     - cron: "0 0 * * 0" # weekly
 jobs:
