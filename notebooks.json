@@ -103,6 +103,12 @@
             "group": "Swarm Product Demos",
             "rank": 10
         },{
+            "path": "notebooks/03h2_Demo-AEBS-AEJxLPS.ipynb",
+            "name": "AEBS: Auroral electrojets LPS",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 11
+        },{
             "path": "notebooks/04a1_Geomag-Models-VirES.ipynb",
             "name": "Model residuals through VirES",
             "class": "viresdemo",
