@@ -1,4 +1,7 @@
+notebooks:
+  - notebooks/*.ipynb
 ignore:
+  - notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
   - __pycache__
   - .git
   - src
