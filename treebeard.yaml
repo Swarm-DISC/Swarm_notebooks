@@ -1,7 +1,7 @@
-secret:
-# .env contains VIRES_TOKEN=***
-  - .env
+notebooks:
+  - notebooks/*.ipynb
 ignore:
+  - notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
   - __pycache__
   - .git
   - src
@@ -9,4 +9,4 @@ ignore:
   - "**/*pyc"
   - "**.vscode"
   - "MagneticModel*"
-schedule: 'weekly'
+cell_execution_timeout_seconds: 1200

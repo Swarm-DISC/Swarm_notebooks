@@ -10,15 +10,17 @@ dependencies:
   # others
   - numpy
   - scipy
+  - pandas<1.1
   - xarray
   - matplotlib
   - gdal
   - cartopy
   - cdflib
+  - dask
   - pip
   - pip:
-      - treebeard
       - watermark
       - viresclient
       - python-dotenv
       - hdf5storage # for chaosmagpy
+      - netCDF4

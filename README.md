@@ -1,47 +1,18 @@
 # Swarm_notebooks
 
-[![VRE-Interact](https://img.shields.io/badge/interact-VRE-blue)](https://vre.vires.services/user-redirect/lab/tree/shared/Swarm_notebooks/02a__Intro-Swarm-viresclient.ipynb)
-[![nbviewer](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/Swarm-DISC/Swarm_notebooks/tree/master/)
+[![VRE-Interact](https://img.shields.io/badge/interact-VRE-blue)](https://vre.vires.services/user-redirect/lab/tree/shared/Swarm_notebooks/02a__Intro-Swarm-viresclient.ipynb "Run notebooks on the ESA Swarm Virtual Research Environment")
+[![Treebeard notebook status](https://api.treebeard.io/Swarm-DISC/Swarm_notebooks/master/buildbadge)](https://treebeard.io/admin/Swarm-DISC/Swarm_notebooks/master "View the latest notebook run")
 
-Notebooks demonstrating access to Swarm data for scientific analyses. For more info, and to view them, go to https://swarm-vre.readthedocs.io/en/staging/notebooks_preface.html
+Notebooks demonstrating access to Swarm data for scientific analyses. For more info, and to view them, go to https://swarm-vre.readthedocs.io/en/master/notebooks_preface.html
 
-### Execution of notebooks (nbconvert)
+## Contributing
 
-Convert to executed state in place:
+A proper contributing guide is in progress. If interested please contact ashley.smith@ed.ac.uk
 
+Notebooks are stored in the git repo with outputs cleared. To clear notebook outputs:
+```python
+jupyter nbconvert --clear-output --inplace *.ipynb
 ```
-jupyter nbconvert --to notebook --inplace --execute 03*.ipynb
-```
+(requires nbconvert >=6.0)
 
-but be careful about cells that can't be handled by the automation (e.g. `set_token`, widgets...). 
-
-By default, errors will cause nbconvert to halt. To allow errors (and execution will continue onto the following cells), use `allow_errors`:
-
-```
-jupyter nbconvert --to notebook --inplace --execute --ExecutePreprocessor.allow_errors=True 02a__Intro-Swarm-viresclient.ipynb
-```
-
-To run most of them (skipping 02a and 02c), using a timeout of 10 minutes (the default is 30s):
-
-```
-jupyter nbconvert --to notebook --inplace --execute 01* 02b* 02d* 03* 04* 05* --ExecutePreprocessor.timeout=600
-```
-
-> To be determined whether the automated execution works well enough.
-
-### Testing of notebooks (nbval)
-
-Use [nbval](https://github.com/computationalmodelling/nbval) to just verify that notebooks complete without error (`nbval-lax`). nbval can also verify that cell outputs do not change, but that would be overly complicated to work with as the outputs will often change (e.g. change in progress bars, change in exact figure contents).
-
-Quickstart:
-
-- `pip install pytest nbval`
-- `pytest --nbval-lax *.ipynb`
-- Mark cells to be skipped with `# NBVAL_SKIP` like:
-
-```
-# NBVAL_SKIP
-from viresclient import set_token
-set_token("https://vires.services/ows", set_default=True)
-# (user is now prompted to enter the token)
-```
+Notebooks are picked up by Treebeard and executed, with the outputs viewable within the Swarm-VRE docs.
