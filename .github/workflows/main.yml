@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        run: |
+      - run: |
           docker login -u ${{ secrets.EOX_REGISTRY_USER }} -p ${{ secrets.EOX_REGISTRY_PASSWORD }} registry.gitlab.eox.at
           docker pull registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.7.5
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u jovyan \
