@@ -1,28 +1,30 @@
 on:
   push:
     branches:
-      - master
       - staging
   pull_request:
     branches:
-      - master
       - staging
-  schedule:
-    - cron: "0 0 * * 0" # weekly
 jobs:
   run:
+    name: nbmake on VRE image
     runs-on: ubuntu-latest
-    name: Run treebeard
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - uses: treebeardtech/treebeard@master
-        with:
-          api-key: ${{ secrets.TREEBEARD_API_KEY }}
-          docker-username: "smithara"
-          docker-password: "${{ secrets.DOCKER_PASSWORD }}"
-          docker-image-name: "swarmdisc/swarm_notebooks"
-        env:
-          TB_VIRES_TOKEN: "${{ secrets.VIRES_TOKEN }}"
-          TB_VIRES_TOKEN_STAGINGDISC: "${{ secrets.VIRES_TOKEN_STAGINGDISC }}"
-          TB_VIRES_TOKEN_STAGING: "${{ secrets.VIRES_TOKEN_STAGING }}"
+        run: |
+          docker login -u ${{ secrets.EOX_REGISTRY_USER }} -p ${{ secrets.EOX_REGISTRY_PASSWORD }} registry.gitlab.eox.at
+          docker pull registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.7.5
+          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u jovyan \
+              registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.7.5 \
+              -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
+              bash -c \
+            'export CDF_LIB="/opt/conda/lib" && \
+            pip install --upgrade viresclient && \
+            viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
+            viresclient set_default_server https://vires.services/ows && \
+            pip install "sphinxcontrib-bibtex<2.0.0" nbmake[html] --ignore-installed && \
+            cd ~/Swarm_notebooks && \
+            pytest -n=2 --nbmake \
+              notebooks/* \
+              ignore=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb \
+              --path-output=.'
