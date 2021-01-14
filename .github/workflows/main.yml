@@ -1,10 +1,10 @@
 on:
   push:
     branches:
-      - staging
+      - ci-nbmake
   pull_request:
     branches:
-      - staging
+      - ci-nbmake
 jobs:
   run:
     name: nbmake on VRE image
@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
-          docker run -v $GITHUB_WORKSPACE/Swarm_notebooks:/home/jovyan -u jovyan \
+          docker run -v $GITHUB_WORKSPACE/Swarm_notebooks:/home/root -u root \
               -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
               registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.7.5 \
               bash -c \
