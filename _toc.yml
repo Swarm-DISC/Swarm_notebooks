@@ -1,0 +1,33 @@
+- file: docs/welcome
+- part: "Intro - Python & Jupyter"
+  chapters:
+  - file: notebooks/01a__Intro-Jupyter-Python
+  - file: notebooks/01b1_Pandas-and-Plots
+- part: "Intro - VirES for Swarm"
+  chapters:
+  - file: notebooks/02a__Intro-Swarm-viresclient
+  - file: notebooks/02b__viresclient-Available-Data
+  - file: notebooks/02c__viresclient-API
+  - file: notebooks/02d__viresclient-Large-Data
+- part: "Swarm Product Demos"
+  chapters:
+  - file: notebooks/03a1_Demo-MAGx_LR_1B
+  - file: notebooks/03a2_Demo-MAGx_HR_1B
+  - file: notebooks/03b__Demo-EFIx_LP_1B
+  - file: notebooks/03c__Demo-IPDxIRR_2F
+  - file: notebooks/03d__Demo-TECxTMS_2F
+  - file: notebooks/03e1_Demo-FACxTMS_2F
+  - file: notebooks/03e2_Demo-FAC_TMS_2F
+  - file: notebooks/03f__Demo-EEFxTMS_2F
+  - file: notebooks/03g__Demo-IBIxTMS_2F
+  - file: notebooks/03h1_Demo-AEBS-AEJxLPL
+  - file: notebooks/03h2_Demo-AEBS-AEJxLPS
+- part: "Geomagnetic Models & Ground Obs"
+  chapters:
+  - file: notebooks/04a1_Geomag-Models-VirES
+  - file: notebooks/04b1_Geomag-Models-eoxmagmod
+  - file: notebooks/04c1_Geomag-Ground-Data-FTP
+  - file: notebooks/04c2_Geomag-Ground-Data-VirES
+- part: "Ionosphere"
+  chapters:
+    - file: notebooks/05a1_Polar-Region-Plots

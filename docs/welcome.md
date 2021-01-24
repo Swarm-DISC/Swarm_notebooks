@@ -1,0 +1,3 @@
+# Welcome
+
+Hello! These pages are generated from Jupyter notebooks. They are presented statically here just for browsing - once you have found one you are interested in, hover over the rocket button at the top of the page, and click on the "JupyterHub" option. This will launch the notebook interactively on the *Swarm Virtual Research Environment* - but first you must create an account (it's free!).

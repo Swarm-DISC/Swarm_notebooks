@@ -1,0 +1,29 @@
+# Book settings
+# Learn more at https://jupyterbook.org/customize/config.html
+
+title: Swarm Notebooks
+author: "Ashley Smith et al."
+logo: ""
+only_build_toc_files: true
+
+execute:
+  execute_notebooks: 'off'
+
+launch_buttons:
+  notebook_interface        : jupyterlab
+  jupyterhub_url            : "https://vre.vires.services"
+  binderhub_url             : ""
+
+repository:
+  url: https://github.com/Swarm-DISC/Swarm_notebooks
+
+html:
+  use_issues_button: true
+  use_repository_button: true
+  use_edit_page_button      : false
+  use_repository_button     : true
+  use_issues_button         : true
+  extra_navbar              : Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+  home_page_in_navbar       : true
+  comments:
+    hypothesis              : true

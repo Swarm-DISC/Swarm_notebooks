@@ -1,28 +1,29 @@
 on:
   push:
     branches:
-      - ci-nbmake
+      - jbook
   pull_request:
     branches:
-      - ci-nbmake
+      - jbook
 jobs:
   run:
-    name: nbmake on VRE image
+    name: Build Jupyter Book
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
-          docker run -v $GITHUB_WORKSPACE/Swarm_notebooks:/home/root -u root \
-              -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
-              registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.7.5 \
-              bash -c \
-            'export CDF_LIB="/opt/conda/lib" && \
-            pip install --upgrade viresclient && \
-            viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
-            viresclient set_default_server https://vires.services/ows && \
-            pip install "sphinxcontrib-bibtex<2.0.0" nbmake[html] --ignore-installed && \
-            pytest -n=2 --nbmake \
-              notebooks/* \
-              ignore=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb \
-              --path-output=.'
+          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
+            -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
+            registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.7.5 \
+            bash -c \
+              '
+              export CDF_LIB=/opt/conda/lib && \
+              pip install --upgrade viresclient && \
+              viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
+              viresclient set_default_server https://vires.services/ows && \
+              pip install jupyter-book --ignore-installed
+              jupyter nbconvert --to notebook --inplace --execute --ExecutePreprocessor.timeout=1200 notebooks/*
+              jupyter-book build .
+              '
+      - run: netlify deploy --dir=_build/html --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} --site=${{ secrets.NETLIFY_SITE_API_ID }}
