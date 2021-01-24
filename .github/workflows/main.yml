@@ -23,8 +23,9 @@ jobs:
               pip install --upgrade viresclient && \
               viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
               viresclient set_default_server https://vires.services/ows && \
-              pip install jupyter-book --ignore-installed
-              jupyter nbconvert --to notebook --inplace --execute --ExecutePreprocessor.timeout=1200 notebooks/*
+              pip install jupyter-book --ignore-installed && \
+              pip install --upgrade nbconvert && \
+              jupyter nbconvert --to notebook --inplace --execute --ExecutePreprocessor.timeout=1200 notebooks/* && \
               jupyter-book build .
               '
       - name: Deploy preview with netlify        
