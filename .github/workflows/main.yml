@@ -16,7 +16,7 @@ jobs:
       - name: Execute notebooks and build book
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
-          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u jovyan \
+          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
             -e VIRES_TOKEN_STAGING=${{ secrets.VIRES_TOKEN_STAGING }} \
             -e VIRES_TOKEN_STAGING_DISC=${{ secrets.VIRES_TOKEN_STAGINGDISC}} \
