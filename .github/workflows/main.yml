@@ -27,10 +27,9 @@ jobs:
               pip install --upgrade 'git+https://github.com/ESA-VirES/VirES-Python-Client@staging#egg=viresclient' && \
               viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
               viresclient set_token https://staging.vires.services/ows $VIRES_TOKEN_STAGING && \
-              viresclient set_token https://staging.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
-              viresclient set_default_server https://staging.vires.services/ows && \
-              pip install jupyter-book nbmake --ignore-installed && \
-              pytest --nbmake --overwrite notebooks && \
+              viresclient set_token https://staging.viresdisc.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
+              viresclient set_default_server https://vires.services/ows && \
+              pip install jupyter-book --ignore-installed && \
               jupyter-book build .
               '
       - name: Deploy preview with netlify        
