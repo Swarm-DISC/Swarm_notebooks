@@ -1,9 +1,11 @@
 on:
   push:
     branches:
+      - staging
       - jbook
   pull_request:
     branches:
+      - staging
       - jbook
 jobs:
   run:
@@ -14,18 +16,21 @@ jobs:
       - name: Execute notebooks and build book
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
-          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
+          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u jovyan \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
-            registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.7.5 \
+            -e VIRES_TOKEN_STAGING=${{ secrets.VIRES_TOKEN_STAGING }} \
+            -e VIRES_TOKEN_STAGING_DISC=${{ secrets.VIRES_TOKEN_STAGINGDISC}} \
+            smithara/swarm-vre-testing:latest \
             bash -c \
               '
               export CDF_LIB=/opt/conda/lib && \
-              pip install --upgrade viresclient && \
+              pip install --upgrade 'git+https://github.com/ESA-VirES/VirES-Python-Client@staging#egg=viresclient' \
               viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
-              viresclient set_default_server https://vires.services/ows && \
-              pip install jupyter-book --ignore-installed && \
-              pip install --upgrade nbconvert && \
-              jupyter nbconvert --to notebook --inplace --execute --ExecutePreprocessor.timeout=1200 notebooks/* && \
+              viresclient set_token https://staging.vires.services/ows $VIRES_TOKEN_STAGING && \
+              viresclient set_token https://staging.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
+              viresclient set_default_server https://staging.vires.services/ows && \
+              pip install jupyter-book nbmake --ignore-installed && \
+              pytest --nbmake --overwrite notebooks && \
               jupyter-book build .
               '
       - name: Deploy preview with netlify        
