@@ -115,6 +115,12 @@
             "group": "Swarm Product Demos",
             "rank": 12
         },{
+            "path": "notebooks/03z1_External-Data.ipynb",
+            "name": "External data (HAPI)",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 13
+        },{
             "path": "notebooks/04a1_Geomag-Models-VirES.ipynb",
             "name": "Model residuals through VirES",
             "class": "viresdemo",
@@ -142,8 +148,14 @@
             "path": "notebooks/05a1_Polar-Region-Plots.ipynb",
             "name": "Polar region plots",
             "class": "viresdemo",
-            "group": "Ionosphere",
+            "group": "Ionosphere & Space Weather",
             "rank": 1
+        },{
+            "path": "notebooks/05b1_Solar-Wind-to-Ground.ipynb",
+            "name": "From solar wind 2 ground",
+            "class": "viresdemo",
+            "group": "Ionosphere & Space Weather",
+            "rank": 2
         }
     ]
 }

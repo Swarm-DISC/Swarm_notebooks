@@ -22,12 +22,16 @@
   - file: notebooks/03g__Demo-IBIxTMS_2F
   - file: notebooks/03h1_Demo-AEBS-AEJxLPL
   - file: notebooks/03h2_Demo-AEBS-AEJxLPS
-- part: "Geomagnetic Models & Ground Obs"
+  - file: notebooks/03i1_Demo-VOBS
+  - file: notebooks/03z1_External-Data
+- part: "Ground observatories"
+  chapters:
+  - file: notebooks/04c2_Geomag-Ground-Data-VirES
+- part: "Geomagnetic Models"
   chapters:
   - file: notebooks/04a1_Geomag-Models-VirES
   - file: notebooks/04b1_Geomag-Models-eoxmagmod
-  - file: notebooks/04c1_Geomag-Ground-Data-FTP
-  - file: notebooks/04c2_Geomag-Ground-Data-VirES
-- part: "Ionosphere"
+- part: "Ionosphere & Space Weather"
   chapters:
     - file: notebooks/05a1_Polar-Region-Plots
+    - file: notebooks/05b1_Solar-Wind-to-Ground
