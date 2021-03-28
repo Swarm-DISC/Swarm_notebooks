@@ -29,7 +29,7 @@ jobs:
               viresclient set_token https://staging.vires.services/ows $VIRES_TOKEN_STAGING && \
               viresclient set_token https://staging.viresdisc.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
               viresclient set_default_server https://vires.services/ows && \
-              pip install jupyter-book --ignore-installed && \
+              pip install jupyter-book && \
               jupyter-book build .
               '
       - name: Deploy preview with netlify        
