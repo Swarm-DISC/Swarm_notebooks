@@ -1,4 +1,10 @@
 - file: docs/welcome
+- part: "Virtual Research Environment"
+  chapters:
+  - file: docs/vre-overview
+  - file: docs/vre-details
+  - file: docs/notebook-development
+  - file: docs/beyond-swarm-notebooks
 - part: "Intro - Python & Jupyter"
   chapters:
   - file: notebooks/01a__Intro-Jupyter-Python
