@@ -2,13 +2,13 @@
 
 Notebooks demonstrating access to [products from the ESA Swarm mission](https://earth.esa.int/eogateway/missions/swarm) using [VirES](https://vires.services/)
 
-Browse them: <https://swarm.magneticearth.org/>
+Browse them at <https://swarm.magneticearth.org/>
 
-Login to the ESA Swarm Virtual Research Environment to run them: [![VRE-Interact](https://img.shields.io/badge/interact-VRE-blue)](https://vre.vires.services/user-redirect/lab/tree/shared/Swarm_notebooks/02a__Intro-Swarm-viresclient.ipynb "Run notebooks on the ESA Swarm Virtual Research Environment")
+Interact with them on the [Swarm Virtual Research Environment](https://vre.vires.services/) (an [ESA project](https://earth.esa.int/eogateway/tools/swarm-vre))
 
 ## Contributing
 
-A proper contributing guide is in progress. If interested please contact ashley.smith@ed.ac.uk
+A contributing guide is in progress. If interested please contact ashley.smith@ed.ac.uk
 
 ## Development
 
