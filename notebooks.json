@@ -115,35 +115,41 @@
             "group": "Swarm Product Demos",
             "rank": 12
         },{
+            "path": "notebooks/03z1_External-Data.ipynb",
+            "name": "External data (HAPI)",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 13
+        },{
+            "path": "notebooks/04c2_Geomag-Ground-Data-VirES.ipynb",
+            "name": "Ground Obs Data Access",
+            "class": "viresdemo",
+            "group": "Geomagnetic Ground Observatories",
+            "rank": 1
+        },{
             "path": "notebooks/04a1_Geomag-Models-VirES.ipynb",
             "name": "Model residuals through VirES",
             "class": "viresdemo",
-            "group": "Geomagnetic Models & Ground Obs",
+            "group": "Geomagnetic Models",
             "rank": 1
         },{
             "path": "notebooks/04b1_Geomag-Models-eoxmagmod.ipynb",
             "name": "Forward eval + isolines",
             "class": "viresdemo",
-            "group": "Geomagnetic Models & Ground Obs",
+            "group": "Geomagnetic Models",
             "rank": 2
-        },{
-            "path": "notebooks/04c1_Geomag-Ground-Data-FTP.ipynb",
-            "name": "Ground Obs - FTP",
-            "class": "viresdemo",
-            "group": "Geomagnetic Models & Ground Obs",
-            "rank": 3
-        },{
-            "path": "notebooks/04c2_Geomag-Ground-Data-VirES.ipynb",
-            "name": "Ground Obs - VirES",
-            "class": "viresdemo",
-            "group": "Geomagnetic Models & Ground Obs",
-            "rank": 4
         },{
             "path": "notebooks/05a1_Polar-Region-Plots.ipynb",
             "name": "Polar region plots",
             "class": "viresdemo",
-            "group": "Ionosphere",
+            "group": "Ionosphere & Space Weather",
             "rank": 1
+        },{
+            "path": "notebooks/05b1_Solar-Wind-to-Ground.ipynb",
+            "name": "From solar wind to the ground",
+            "class": "viresdemo",
+            "group": "Ionosphere & Space Weather",
+            "rank": 2
         }
     ]
 }
