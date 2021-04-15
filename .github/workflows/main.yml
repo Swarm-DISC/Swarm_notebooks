@@ -7,7 +7,7 @@ on:
       - staging
 jobs:
   run:
-    name: Build Jupyter Book
+    name: Build Jupyter Book (STAGING)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,7 +18,7 @@ jobs:
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
             -e VIRES_TOKEN_STAGING=${{ secrets.VIRES_TOKEN_STAGING }} \
             -e VIRES_TOKEN_STAGING_DISC=${{ secrets.VIRES_TOKEN_STAGINGDISC}} \
-            smithara/swarm-vre-testing:latest \
+            registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.8.0 \
             bash -c \
               '
               export CDF_LIB=/opt/conda/lib && \
@@ -27,8 +27,9 @@ jobs:
               viresclient set_token https://staging.vires.services/ows $VIRES_TOKEN_STAGING && \
               viresclient set_token https://staging.viresdisc.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
               viresclient set_default_server https://staging.vires.services/ows && \
-              pip install jupyter-book && \
-              jupyter-book build .
+              pip install jupyter-book nbmake pytest-xdist && \
+              pytest --numprocesses 2 --nbmake --overwrite notebooks/*.ipynb && \
+              jupyter-book build --config _config-testing.yml .
               '
-      - name: Deploy preview with netlify        
+      - name: Deploy preview with netlify
         run: netlify deploy --dir=_build/html --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} --site=${{ secrets.NETLIFY_SITE_API_ID }}

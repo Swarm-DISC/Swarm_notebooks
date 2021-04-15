@@ -1,23 +1,22 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: Swarm Notebooks
+title: Swarm Notebooks (TESTING)
 author: "Ashley Smith et al."
 logo: ""
 only_build_toc_files: true
 
 execute:
-  execute_notebooks: cache
-  run_in_temp: true
+  execute_notebooks: off
 
 launch_buttons:
   notebook_interface        : jupyterlab
-  jupyterhub_url            : "https://vre.vires.services"
+  jupyterhub_url            : "https://vre-staging.vires.services"
   binderhub_url             : ""
 
 repository:
   url: https://github.com/Swarm-DISC/Swarm_notebooks
-  branch: master
+  branch: staging
 
 html:
   use_issues_button: true
