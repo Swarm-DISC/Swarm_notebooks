@@ -2,11 +2,9 @@ on:
   push:
     branches:
       - staging
-      - jbook
   pull_request:
     branches:
       - staging
-      - jbook
 jobs:
   run:
     name: Build Jupyter Book
@@ -28,7 +26,7 @@ jobs:
               viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
               viresclient set_token https://staging.vires.services/ows $VIRES_TOKEN_STAGING && \
               viresclient set_token https://staging.viresdisc.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
-              viresclient set_default_server https://vires.services/ows && \
+              viresclient set_default_server https://staging.vires.services/ows && \
               pip install jupyter-book && \
               jupyter-book build .
               '
