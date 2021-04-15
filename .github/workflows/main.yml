@@ -28,7 +28,8 @@ jobs:
               viresclient set_token https://staging.viresdisc.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
               viresclient set_default_server https://staging.vires.services/ows && \
               pip install jupyter-book nbmake pytest-xdist && \
-              pytest --numprocesses 2 --nbmake --overwrite notebooks/*.ipynb && \
+              pytest --numprocesses 2 --nbmake --overwrite \
+                --ignore=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb notebooks/*.ipynb  && \
               jupyter-book build --config _config-testing.yml .
               '
       - name: Deploy preview with netlify
