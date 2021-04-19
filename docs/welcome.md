@@ -11,7 +11,7 @@ Check the list at [Magnetic Earth](https://magneticearth.org/pages/software.html
 
 ## How to use this resource
 
-Some of these pages are generated from Jupyter notebooks which can be interacted with on the VRE - on those pages you will see a 🚀 rocket button at the top. Hover over that button and select *JupyterHub* to launch the notebook interactively (after first creating a free account). The notebooks are also available within the VRE already, baked in to the notebook launcher.
+Some of these pages are generated from Jupyter notebooks which can be interacted with on the VRE - on those pages you will see a 🚀 rocket button at the top. Hover over that button and select *JupyterHub* to launch the notebook interactively (after first creating a free account). The notebooks are also available within the VRE already, baked into the notebook launcher.
 
 :::{admonition} To give feedback (questions, suggestions, anything!) to help us improve:
 :class: tip
@@ -47,6 +47,12 @@ Some of these pages are generated from Jupyter notebooks which can be interacted
 ![disc_logo](images/swarm-disc.png)
 ---
 ```{link-button} https://earth.esa.int/eogateway/missions/swarm
+:text: 
+:classes: stretched-link
+```
+![disc_logo](images/swarm_logo.png)
+---
+```{link-button} https://www.esa.int
 :text: 
 :classes: stretched-link
 ```

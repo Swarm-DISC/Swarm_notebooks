@@ -5,7 +5,7 @@
   - file: docs/vre-details
   - file: docs/notebook-development
   - file: docs/beyond-swarm-notebooks
-- part: "Intro - Python & Jupyter"
+- part: "Intro - Jupyter & Python"
   chapters:
   - file: notebooks/01a__Intro-Jupyter-Python
   - file: notebooks/01b1_Pandas-and-Plots
