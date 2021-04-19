@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Local Netlify folder
+.netlify
+
+# Jupyter book build
+_build
