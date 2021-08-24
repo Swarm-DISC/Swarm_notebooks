@@ -31,6 +31,7 @@ parts:
   - file: notebooks/03h1_Demo-AEBS-AEJxLPL
   - file: notebooks/03h2_Demo-AEBS-AEJxLPS
   - file: notebooks/03i1_Demo-VOBS
+  - file: notebooks/03y1_Multi-Mission-Intro
   - file: notebooks/03z1_External-Data
 - caption: Ground observatories
   chapters:
