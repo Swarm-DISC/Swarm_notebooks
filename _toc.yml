@@ -1,21 +1,23 @@
-- file: docs/welcome
-- part: "Virtual Research Environment"
+format: jb-book
+root: docs/welcome
+parts:
+- caption: Virtual Research Environment
   chapters:
   - file: docs/vre-overview
   - file: docs/vre-details
   - file: docs/notebook-development
   - file: docs/beyond-swarm-notebooks
-- part: "Intro - Jupyter & Python"
+- caption: Intro - Jupyter & Python
   chapters:
   - file: notebooks/01a__Intro-Jupyter-Python
   - file: notebooks/01b1_Pandas-and-Plots
-- part: "Intro - VirES for Swarm"
+- caption: Intro - VirES for Swarm
   chapters:
   - file: notebooks/02a__Intro-Swarm-viresclient
   - file: notebooks/02b__viresclient-Available-Data
   - file: notebooks/02c__viresclient-API
   - file: notebooks/02d__viresclient-Large-Data
-- part: "Swarm Product Demos"
+- caption: Swarm Product Demos
   chapters:
   - file: notebooks/03a1_Demo-MAGx_LR_1B
   - file: notebooks/03a2_Demo-MAGx_HR_1B
@@ -29,15 +31,16 @@
   - file: notebooks/03h1_Demo-AEBS-AEJxLPL
   - file: notebooks/03h2_Demo-AEBS-AEJxLPS
   - file: notebooks/03i1_Demo-VOBS
+  - file: notebooks/03y1_Multi-Mission-Intro
   - file: notebooks/03z1_External-Data
-- part: "Ground observatories"
+- caption: Ground observatories
   chapters:
   - file: notebooks/04c2_Geomag-Ground-Data-VirES
-- part: "Geomagnetic Models"
+- caption: Geomagnetic Models
   chapters:
   - file: notebooks/04a1_Geomag-Models-VirES
   - file: notebooks/04b1_Geomag-Models-eoxmagmod
-- part: "Ionosphere & Space Weather"
+- caption: Ionosphere & Space Weather
   chapters:
-    - file: notebooks/05a1_Polar-Region-Plots
-    - file: notebooks/05b1_Solar-Wind-to-Ground
+  - file: notebooks/05a1_Polar-Region-Plots
+  - file: notebooks/05b1_Solar-Wind-to-Ground
