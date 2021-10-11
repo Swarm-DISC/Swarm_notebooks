@@ -37,6 +37,12 @@
             "group": "Introduction: VirES for Swarm",
             "rank": 4
         },{
+            "path": "notebooks/02e1_Conjunction-Interface.ipynb",
+            "name": "Finding conjunctions",
+            "class": "introductionitem",
+            "group": "Introduction: VirES for Swarm",
+            "rank": 5
+        },{
             "path": "notebooks/02z1__Template-Basic.ipynb",
             "name": "VirES template",
             "class": "virestemplate",
@@ -115,11 +121,23 @@
             "group": "Swarm Product Demos",
             "rank": 12
         },{
+            "path": "notebooks/03j1_Demo-PRISM-MITx.ipynb",
+            "name": "MIT: Mid-lat trough",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 13
+        },{
+            "path": "notebooks/03y1_Multi-Mission-Intro.ipynb",
+            "name": "Multi-mission MAG",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 14
+        },{
             "path": "notebooks/03z1_External-Data.ipynb",
             "name": "External data (HAPI)",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 13
+            "rank": 15
         },{
             "path": "notebooks/04c2_Geomag-Ground-Data-VirES.ipynb",
             "name": "Ground Obs Data Access",
