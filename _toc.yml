@@ -17,6 +17,7 @@ parts:
   - file: notebooks/02b__viresclient-Available-Data
   - file: notebooks/02c__viresclient-API
   - file: notebooks/02d__viresclient-Large-Data
+  - file: notebooks/02e1_Conjunction-Interface
 - caption: Swarm Product Demos
   chapters:
   - file: notebooks/03a1_Demo-MAGx_LR_1B
@@ -31,6 +32,7 @@ parts:
   - file: notebooks/03h1_Demo-AEBS-AEJxLPL
   - file: notebooks/03h2_Demo-AEBS-AEJxLPS
   - file: notebooks/03i1_Demo-VOBS
+  - file: notebooks/03j1_Demo-PRISM-MITx
   - file: notebooks/03y1_Multi-Mission-Intro
   - file: notebooks/03z1_External-Data
 - caption: Ground observatories
