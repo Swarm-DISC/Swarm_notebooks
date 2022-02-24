@@ -1,0 +1,50 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.3'
+
+jobs:
+  run:
+    name: Build Jupyter Book (Production)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull docker image
+        run: |
+          echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
+          docker pull ${{ env.DOCKER_IMAGE }}
+      - uses: actions/checkout@v2
+      - name: Execute notebooks and build book
+        run: |
+          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
+            -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }}
+            ${{ env.DOCKER_IMAGE }} \
+            bash -c \
+              '
+              viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
+              viresclient set_default_server https://vires.services/ows && \
+              pip install jupyter-book==0.12.1 && \
+              jupyter-book build --config _config.yml .
+              '
+      - name: Deploy preview to Netlify
+        if: always()
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: './_build/html'
+          production-deploy: false
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions (master)"
+          github-deployment-environment: production-preview
+          github-deployment-description: "jupyter-book production preview"
+          alias: preview-master-${{ github.event.number }}
+          enable-pull-request-comment: true
+          enable-commit-comment: false
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_API_ID }}
