@@ -5,6 +5,10 @@ on:
   pull_request:
     branches:
       - master
+
+env:
+  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.3'
+
 jobs:
   run:
     name: Build Jupyter Book
@@ -13,18 +17,18 @@ jobs:
       - name: Pull docker image
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
-          docker pull registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.3
+          docker pull ${{ env.DOCKER_IMAGE }}
       - uses: actions/checkout@v2
       - name: Execute notebooks and build book
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }}
-            registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.3 \
+            ${{ env.DOCKER_IMAGE }} \
             bash -c \
               '
               viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
               viresclient set_default_server https://vires.services/ows && \
-              pip install 'jupyter-book==0.12.1'
+              pip install jupyter-book==0.12.1 && \
               jupyter-book build --config _config.yml .
               '
       - name: Deploy preview with netlify
