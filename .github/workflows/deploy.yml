@@ -1,7 +1,4 @@
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
@@ -22,7 +19,7 @@ jobs:
       - name: Execute notebooks and build book
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
-            -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }}
+            -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
             ${{ env.DOCKER_IMAGE }} \
             bash -c \
               '
