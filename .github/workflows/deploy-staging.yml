@@ -13,7 +13,7 @@ jobs:
       - name: Pull docker image
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
-          docker pull registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.8.2
+          docker pull registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.3
       - uses: actions/checkout@v2
       - name: Execute notebooks and build book
         run: |
@@ -21,7 +21,7 @@ jobs:
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
             -e VIRES_TOKEN_STAGING=${{ secrets.VIRES_TOKEN_STAGING }} \
             -e VIRES_TOKEN_STAGING_DISC=${{ secrets.VIRES_TOKEN_STAGINGDISC}} \
-            registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.8.2 \
+            registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.3 \
             bash -c \
               '
               export CDF_LIB=/opt/conda/lib && \
@@ -30,7 +30,7 @@ jobs:
               viresclient set_token https://staging.vires.services/ows $VIRES_TOKEN_STAGING && \
               viresclient set_token https://staging.viresdisc.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
               viresclient set_default_server https://staging.vires.services/ows && \
-              pip install jupyter-book nbmake pytest-xdist && \
+              pip install 'jupyter-book==0.12.1' nbmake pytest-xdist && \
               pytest --numprocesses 2 --nbmake --overwrite \
                 notebooks/*.ipynb \
                 --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb  && \
