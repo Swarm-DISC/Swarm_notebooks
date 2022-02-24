@@ -1,5 +1,9 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
+# This config builds the book without executing the notebooks first
+# To be used after running:
+#  pytest --nbmake --overwrite
+# (See .github/workflows/deploy-staging.yml)
 
 title: Swarm Notebooks (TESTING)
 author: "Ashley Smith et al."
