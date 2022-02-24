@@ -48,6 +48,19 @@ jobs:
               pip install jupyter-book==0.12.1 && \
               jupyter-book build --config _config-testing.yml .
               '
-      - name: Deploy preview with netlify
-        if: always()
-        run: netlify deploy --dir=_build/html --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} --site=${{ secrets.NETLIFY_SITE_API_ID }}
+      - name: Deploy preview to Netlify
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: './_build/html'
+          production-deploy: false
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions (staging)"
+          github-deployment-environment: staging
+          github-deployment-description: "jupyter-book built from staging"
+          alias: preview-staging-${{ github.event.number }}
+          enable-pull-request-comment: true
+          enable-commit-comment: false
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_API_ID }}
