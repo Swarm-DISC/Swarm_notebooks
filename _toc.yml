@@ -32,6 +32,7 @@ parts:
   - file: notebooks/03g__Demo-IBIxTMS_2F
   - file: notebooks/03h1_Demo-AEBS-AEJxLPL
   - file: notebooks/03h2_Demo-AEBS-AEJxLPS
+  - file: notebooks/03h3_Demo-AEBS-AOBxFAC
   - file: notebooks/03i1_Demo-VOBS
   - file: notebooks/03j1_Demo-PRISM-MITx
   - file: notebooks/03y1_Multi-Mission-Intro

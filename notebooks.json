@@ -121,29 +121,35 @@
             "group": "Swarm Product Demos",
             "rank": 11
         },{
+            "path": "notebooks/03h3_Demo-AEBS-AOBxFAC.ipynb",
+            "name": "AEBS: Auroral boundaries",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 12
+        },{
             "path": "notebooks/03i1_Demo-VOBS.ipynb",
             "name": "VOBS: Virtual Observatories",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 12
+            "rank": 13
         },{
             "path": "notebooks/03j1_Demo-PRISM-MITx.ipynb",
             "name": "MIT: Mid-lat trough",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 13
+            "rank": 14
         },{
             "path": "notebooks/03y1_Multi-Mission-Intro.ipynb",
             "name": "Multi-mission MAG",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 14
+            "rank": 15
         },{
             "path": "notebooks/03z1_External-Data.ipynb",
             "name": "External data (HAPI)",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 15
+            "rank": 16
         },{
             "path": "notebooks/04c2_Geomag-Ground-Data-VirES.ipynb",
             "name": "Ground Obs Data Access",
