@@ -29,3 +29,9 @@ Demonstrations using viresclient, mainly during development of new products on V
 Examples in polar ionosphere studies (Karl M. Laundal)
 
 ---
+
+[Exploring our Magnetic Earth](https://github.com/MagneticEarth/book.magneticearth.org)  
+[![jupyter-book](https://jupyterbook.org/badge.svg)](https://book.magneticearth.org)  [![nbgitpuller](https://img.shields.io/badge/nbgitpuller-VRE-blue)](https://vre.vires.services/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2FMagneticEarth%2Fbook.magneticearth.org&urlpath=lab%2Ftree%2Fbook.magneticearth.org%2F&branch=main)  
+An interactive textbook used as part of the IAGA School
+
+---
