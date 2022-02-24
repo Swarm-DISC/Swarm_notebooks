@@ -43,6 +43,12 @@
             "group": "Introduction: VirES for Swarm",
             "rank": 5
         },{
+            "path": "notebooks/02h1_HAPI.ipynb",
+            "name": "Using HAPI",
+            "class": "introductionitem",
+            "group": "Introduction: VirES for Swarm",
+            "rank": 6
+        },{
             "path": "notebooks/02z1__Template-Basic.ipynb",
             "name": "VirES template",
             "class": "virestemplate",

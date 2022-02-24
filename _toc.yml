@@ -7,6 +7,7 @@ parts:
   - file: docs/vre-details
   - file: docs/notebook-development
   - file: docs/beyond-swarm-notebooks
+  - file: notebooks/02h1_HAPI
 - caption: Intro - Jupyter & Python
   chapters:
   - file: notebooks/01a__Intro-Jupyter-Python

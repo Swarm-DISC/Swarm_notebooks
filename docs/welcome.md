@@ -4,9 +4,10 @@
 
 Hello! Welcome to **Swarm Notebooks** - a community resource to help people make use of the product portfolio from [**ESA's Swarm mission**](https://earth.esa.int/eogateway/missions/swarm) using the Python ecosystem. Here you will find recipes and guidance in using Swarm data in conjunction with the [**VirES**](https://vires.services) data retrieval system and the [**Virtual Research Environment (VRE)**](https://vre.vires.services).
 
-:::{admonition} Looking for other tools and services?
+:::{admonition} Looking for more resources?
 :class: seealso
-Check the list at [Magnetic Earth](https://magneticearth.org/pages/software.html)
+- Read more about the [Swarm data products](https://earth.esa.int/eogateway/missions/swarm/data)
+- Check the list of other tools and services at [Magnetic Earth](https://magneticearth.org/pages/software.html)
 :::
 
 ## How to use this resource
