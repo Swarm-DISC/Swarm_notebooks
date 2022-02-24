@@ -11,7 +11,7 @@ env:
 
 jobs:
   run:
-    name: Build Jupyter Book (STAGING)
+    name: Build Jupyter Book (Staging)
     runs-on: ubuntu-latest
     steps:
       - name: Pull docker image
@@ -49,6 +49,7 @@ jobs:
               jupyter-book build --config _config-testing.yml .
               '
       - name: Deploy preview to Netlify
+        if: always()
         uses: nwtgck/actions-netlify@v1.2
         with:
           publish-dir: './_build/html'
