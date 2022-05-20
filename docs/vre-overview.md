@@ -17,12 +17,15 @@ The goal of this project is to reduce the hurdles that researchers face in data 
 :::{admonition} There are many other projects integrating with the Jupyter ecosystem - some highlights:
 :class: seealso
 - Guides to making use of JupyterLab & Python:
-    - [Jupyter Meets the Earth](https://pangeo-data.github.io/jupyter-earth/jupyter-resources/ecosystem/jupyterlab.html) - Introduction for Scientists
+    - **[Project Python Foundations](https://foundations.projectpythia.org) - learn about Jupyter and key Python packages for Earth sciences**
+    - [Jupyter Meets the Earth](https://pangeo-data.github.io/jupyter-earth/jupyter-resources/ecosystem/jupyterlab.html) - another introduction to Jupyter for scientists
+    - [Code Refinery](https://coderefinery.github.io/jupyter/) introduction to Jupyter
     - [Software Carpentry Python course](https://swcarpentry.github.io/python-novice-gapminder/)
     - [Project Pythia](https://projectpythia.org/pages/links.html) - A Community Educational Resource for Geoscientists
     - [Data 8](http://data8.org/) - UC Berkeley Foundations of Data Science course
     - [Teaching and Learning with Jupyter](https://jupyter4edu.github.io/jupyter-edu-book/) - A handbook for educators
+    
 - Wider software & infrastructure projects
     - [Pangeo](https://pangeo.io/) - A community platform for Big Data geoscience
+    - [HelioCloud](http://heliocloud.org/) - Cloud computing environments for Heliophysics
     - [Resen](https://ingeo.datatransport.org/home/resen) - "REproducable Software ENvironment" targeting reproducability in geospace science
-

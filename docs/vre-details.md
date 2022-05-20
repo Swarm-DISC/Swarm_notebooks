@@ -16,7 +16,7 @@ If you try running some hardware and quota inspection commands that you are used
 
 :::{admonition} To see the full list:
 :class: info
-Open a Terminal (`File/New/Terminal`) and enter: `conda list`
+Open a Terminal (`File/New/Terminal`) and enter: `conda list` (or equivalently, `mamba list`)
 :::
 
 ### VirES/EOX software
@@ -35,22 +35,19 @@ Open a Terminal (`File/New/Terminal`) and enter: `conda list`
 [pyamps](https://github.com/klaundal/pyAMPS)
 : AMPS model forward code
 
-[swarmpyfac](https://github.com/Swarm-DISC/SwarmPyFAC)
-: Implementation of single-spacecraft FAC algorithm
-
-[ibp](https://gitext.gfz-potsdam.de/rother/ibp-model)
-: Ionospheric bubble probability forward code
-
 ### Wider geomagnetism and space physics community software
 
-[magpysv](https://github.com/gracecox/MagPySV)
-: Generating secular variation time series from ground observatory data
+[hapiclient](https://github.com/hapi-server/client-python)
+: Fetching data from HAPI servers
 
 [apexpy](https://github.com/aburrell/apexpy)
 : Apex and quasi-dipole coordinate transformations
 
 [spacepy](https://github.com/spacepy/spacepy)
 : Tools for space physics
+
+[magpysv](https://github.com/gracecox/MagPySV)
+: Generating secular variation time series from ground observatory data
 
 ### General Python software (highlights)
 
@@ -84,6 +81,10 @@ The default environment comes from a Docker image which is based on the Jupyter 
 If you install some packages with `conda install ...` or `pip install ...`, this will indeed install them and make them available to the default kernel immediately. *However*, they will disappear the next time your container shuts down. When you have not been active for some period of time (<~hours), the container within which your environment is running will shut down. When you log in again, the environment is created anew from the image that everybody shares, so your modifications will no longer be present. This means that installing packages (& extensions) in this way is only sensible for briefly trying them out.
 
 ## Managing custom environments
+
+:::{tip}
+In the instructions below, you can replace `conda` with `mamba` for faster performance
+:::
 
 If you need access to a different collection of packages (e.g. you need a certain unsupported package, or different versions of what is available), then the way to achieve this is through creating an additional *kernel*, which you can then optionally use to execute scripts or notebooks, in place of the default kernel (the default one will also remain available). This procedure is not covered in full here, but in short:  
 ```bash
