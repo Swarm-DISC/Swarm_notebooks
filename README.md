@@ -2,7 +2,7 @@
 
 Notebooks demonstrating access to [products from the ESA Swarm mission](https://earth.esa.int/eogateway/missions/swarm) using [VirES](https://vires.services/)
 
-Browse them at <https://swarm.magneticearth.org/>
+Browse them at https://notebooks.vires.services
 
 Interact with them on the [Swarm Virtual Research Environment](https://vre.vires.services/) (an [ESA project](https://earth.esa.int/eogateway/tools/swarm-vre))
 
