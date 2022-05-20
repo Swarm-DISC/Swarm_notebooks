@@ -139,17 +139,29 @@
             "group": "Swarm Product Demos",
             "rank": 14
         },{
+            "path": "notebooks/03k1_Demo-EFIxTIE.ipynb",
+            "name": "EFIxTIE: Ion temperatures",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 15
+        },{
+            "path": "notebooks/03k2_Demo-EFIxTCT.ipynb",
+            "name": "EFIxTCT: Ion flows",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 16
+        },{
             "path": "notebooks/03y1_Multi-Mission-Intro.ipynb",
             "name": "Multi-mission MAG",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 15
+            "rank": 17
         },{
             "path": "notebooks/03z1_External-Data.ipynb",
             "name": "External data (HAPI)",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 16
+            "rank": 18
         },{
             "path": "notebooks/04c2_Geomag-Ground-Data-VirES.ipynb",
             "name": "Ground Obs Data Access",

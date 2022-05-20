@@ -2,12 +2,22 @@ on:
   pull_request:
     branches:
       - staging
+  workflow_dispatch:
 
 env:
-  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.3'
+  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.5'
 
 jobs:
-  run:
+  pre-commit:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v2
+    - uses: pre-commit/action@v2.0.3
+      with:
+        extra_args: --hook-stage manual --all-files
+  book:
     name: Build Jupyter Book (Staging)
     runs-on: ubuntu-latest
     steps:

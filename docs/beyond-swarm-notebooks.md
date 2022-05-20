@@ -7,13 +7,13 @@ What about other projects beyond the scope of *Swarm Notebooks*? On this page we
 ---
 
 [Swarm-DISC/Swarm_notebooks](https://github.com/Swarm-DISC/Swarm_notebooks)  
-[![jupyter-book](https://jupyterbook.org/badge.svg)](https://swarm.magneticearth.org/) [![nbgitpuller](https://img.shields.io/badge/nbgitpuller-VRE-blue)](https://vre.vires.services/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2FSwarm-DISC%2FSwarm_notebooks&urlpath=lab%2Ftree%2FSwarm_notebooks%2F&branch=master)  
+[![jupyter-book](https://jupyterbook.org/badge.svg)](https://notebooks.vires.services/) [![nbgitpuller](https://img.shields.io/badge/nbgitpuller-VRE-blue)](https://vre.vires.services/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2FSwarm-DISC%2FSwarm_notebooks&urlpath=lab%2Ftree%2FSwarm_notebooks%2F&branch=master)  
 Recipes for interacting with Swarm products
 
 ---
 
 [Swarm-DISC/FAC_exploration](https://github.com/Swarm-DISC/FAC_exploration)  
-[![jupyter-book](https://jupyterbook.org/badge.svg)](https://swarm-fac-exploration.magneticearth.org/) [![nbgitpuller](https://img.shields.io/badge/nbgitpuller-VRE-blue)](https://vre.vires.services/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2FSwarm-DISC%2FFAC_exploration&urlpath=lab%2Ftree%2FFAC_exploration%2F&branch=main)  
+[![jupyter-book](https://jupyterbook.org/badge.svg)](https://fac-exploration.swarmdisc.org) [![nbgitpuller](https://img.shields.io/badge/nbgitpuller-VRE-blue)](https://vre.vires.services/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2FSwarm-DISC%2FFAC_exploration&urlpath=lab%2Ftree%2FFAC_exploration%2F&branch=main)  
 Tools for more advanced exploration of Field-Aligned Currents (SIFACIT project: Adrian Blagau & Joachim Vogt)
 
 ---
