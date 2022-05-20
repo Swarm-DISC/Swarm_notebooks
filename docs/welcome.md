@@ -1,4 +1,4 @@
-<!-- VIEW CONTENT AT https://swarm.magneticearth.org -->
+<!-- VIEW CONTENT AT https://notebooks.vires.services -->
 
 # 👋 Welcome
 
