@@ -8,7 +8,7 @@ only_build_toc_files: true
 
 execute:
   execute_notebooks: cache
-  run_in_temp: true
+  run_in_temp: false
   timeout: 120
 
 launch_buttons:
