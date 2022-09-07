@@ -27,7 +27,7 @@ jobs:
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
           docker pull ${{ env.DOCKER_IMAGE }}
       - uses: actions/checkout@v2
-      - name: Execute notebooks
+      - name: Execute notebooks using nbmake
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
@@ -66,9 +66,9 @@ jobs:
           deploy-message: "Deploy from GitHub Actions (staging)"
           github-deployment-environment: staging
           github-deployment-description: "jupyter-book built from staging"
-          alias: preview-staging-${{ github.event.number }}
+          alias: preview-staging
           enable-pull-request-comment: true
-          enable-commit-comment: false
+          enable-commit-comment: true
           overwrites-pull-request-comment: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
