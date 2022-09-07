@@ -8,7 +8,17 @@ env:
   DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.5'
 
 jobs:
-  run:
+  pre-commit:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v2
+    - uses: pre-commit/action@v2.0.3
+      with:
+        extra_args: --hook-stage manual --all-files
+  book:
+    needs: pre-commit
     name: Build Jupyter Book (Production)
     runs-on: ubuntu-latest
     steps:
@@ -39,9 +49,9 @@ jobs:
           deploy-message: "Deploy from GitHub Actions (master)"
           github-deployment-environment: production-preview
           github-deployment-description: "jupyter-book production preview"
-          alias: preview-master-${{ github.event.number }}
+          alias: preview-master-${{ github.sha }}
           enable-pull-request-comment: true
-          enable-commit-comment: false
+          enable-commit-comment: true
           overwrites-pull-request-comment: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
