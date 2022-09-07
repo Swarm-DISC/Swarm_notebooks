@@ -18,6 +18,7 @@ jobs:
       with:
         extra_args: --hook-stage manual --all-files
   book:
+    needs: pre-commit
     name: Build Jupyter Book (Staging)
     runs-on: ubuntu-latest
     steps:
