@@ -49,7 +49,7 @@ jobs:
           deploy-message: "Deploy from GitHub Actions (master)"
           github-deployment-environment: production-preview
           github-deployment-description: "jupyter-book production preview"
-          alias: preview-master-${{ github.sha }}
+          alias: preview-master
           enable-pull-request-comment: true
           enable-commit-comment: true
           overwrites-pull-request-comment: true
