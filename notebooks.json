@@ -151,17 +151,23 @@
             "group": "Swarm Product Demos",
             "rank": 16
         },{
+            "path": "notebooks/03k3_Demo-EFIxIDM.ipynb",
+            "name": "EFIxIDM: Ion drift & mass",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 17
+        },{
             "path": "notebooks/03y1_Multi-Mission-Intro.ipynb",
             "name": "Multi-mission MAG",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 17
+            "rank": 18
         },{
             "path": "notebooks/03z1_External-Data.ipynb",
             "name": "External data (HAPI)",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 18
+            "rank": 19
         },{
             "path": "notebooks/04c2_Geomag-Ground-Data-VirES.ipynb",
             "name": "Ground Obs Data Access",
