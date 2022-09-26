@@ -1,6 +1,13 @@
 {
     "notebooks": [
         {
+            "path": "notebooks/00a_External-Notebooks.ipynb",
+            "name": "Beyond Swarm Notebooks",
+            "class": "introductionitem",
+            "group": "External Notebook Projects: (SIFACIT etc ...)",
+            "rank": 1
+        },
+        {
             "path": "notebooks/01a__Intro-Jupyter-Python.ipynb",
             "name": "Intro to Jupyter & Python",
             "class": "introductionitem",
@@ -8,13 +15,13 @@
             "rank": 1
         },{
             "path": "notebooks/01b1_Pandas-and-Plots.ipynb",
-            "name": "Pandas: plot stats, errors...",
+            "name": "Intro to Pandas & Plotting",
             "class": "introductionitem",
             "group": "Introduction: Python & Jupyter",
             "rank": 2
         },{
             "path": "notebooks/02a__Intro-Swarm-viresclient.ipynb",
-            "name": "Intro to Swarm viresclient",
+            "name": "Swarm access through VirES",
             "class": "introductionitem",
             "group": "Introduction: VirES for Swarm",
             "rank": 1
@@ -110,19 +117,19 @@
             "rank": 9
         },{
             "path": "notebooks/03h1_Demo-AEBS-AEJxLPL.ipynb",
-            "name": "AEBS: Auroral electrojets LPL",
+            "name": "AEJxLPL Auroral electrojets LC",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
             "rank": 10
         },{
             "path": "notebooks/03h2_Demo-AEBS-AEJxLPS.ipynb",
-            "name": "AEBS: Auroral electrojets LPS",
+            "name": "AEJxLPS: Auroral electrojets SECS",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
             "rank": 11
         },{
             "path": "notebooks/03h3_Demo-AEBS-AOBxFAC.ipynb",
-            "name": "AEBS: Auroral boundaries",
+            "name": "AOBxFAC: Auroral boundaries",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
             "rank": 12

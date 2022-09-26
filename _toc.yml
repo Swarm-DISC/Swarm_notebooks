@@ -6,7 +6,7 @@ parts:
   - file: docs/vre-overview
   - file: docs/vre-details
   - file: docs/notebook-development
-  - file: docs/beyond-swarm-notebooks
+  - file: notebooks/00a_External-Notebooks
   - file: notebooks/02h1_HAPI
 - caption: Intro - Jupyter & Python
   chapters:
@@ -37,6 +37,7 @@ parts:
   - file: notebooks/03j1_Demo-PRISM-MITx
   - file: notebooks/03k1_Demo-EFIxTIE
   - file: notebooks/03k2_Demo-EFIxTCT
+  - file: notebooks/03k3_Demo-EFIxIDM
   - file: notebooks/03y1_Multi-Mission-Intro
   - file: notebooks/03z1_External-Data
 - caption: Ground observatories
