@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.5'
+  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.6'
 
 jobs:
   pre-commit:
@@ -14,10 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v2
-    - uses: pre-commit/action@v2.0.3
+    - uses: pre-commit/action@v3.0.0
       with:
         extra_args: --hook-stage manual --all-files
   book:
+    needs: pre-commit
     name: Build Jupyter Book (Staging)
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +27,7 @@ jobs:
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
           docker pull ${{ env.DOCKER_IMAGE }}
       - uses: actions/checkout@v2
-      - name: Execute notebooks
+      - name: Execute notebooks using nbmake
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
@@ -52,7 +53,7 @@ jobs:
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }} \
             bash -c \
               '
-              pip install jupyter-book==0.12.1 && \
+              pip install jupyter-book==0.12.3 && \
               jupyter-book build --config _config-testing.yml .
               '
       - name: Deploy preview to Netlify
@@ -65,9 +66,9 @@ jobs:
           deploy-message: "Deploy from GitHub Actions (staging)"
           github-deployment-environment: staging
           github-deployment-description: "jupyter-book built from staging"
-          alias: preview-staging-${{ github.event.number }}
+          alias: preview-staging
           enable-pull-request-comment: true
-          enable-commit-comment: false
+          enable-commit-comment: true
           overwrites-pull-request-comment: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
