@@ -176,7 +176,7 @@
             "group": "Swarm Product Demos",
             "rank": 19
         },{
-            "path": "notebooks/06a1_FAST_Intro.ipynb",
+            "path": "notebooks/06a1_FAST-Intro.ipynb",
             "name": "Intro FAST data",
             "class": "viresdemo",
             "group": "FAST Data",
