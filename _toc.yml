@@ -40,6 +40,9 @@ parts:
   - file: notebooks/03k3_Demo-EFIxIDM
   - file: notebooks/03y1_Multi-Mission-Intro
   - file: notebooks/03z1_External-Data
+- caption: FAST data
+  chapters:
+  - file: notebooks/06a1_FAST-Intro
 - caption: Ground observatories
   chapters:
   - file: notebooks/04c2_Geomag-Ground-Data-VirES

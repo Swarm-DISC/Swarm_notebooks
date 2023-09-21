@@ -176,6 +176,12 @@
             "group": "Swarm Product Demos",
             "rank": 19
         },{
+            "path": "notebooks/06a1_FAST_Intro.ipynb",
+            "name": "Intro FAST data",
+            "class": "viresdemo",
+            "group": "FAST Data",
+            "rank": 1
+        },{
             "path": "notebooks/04c2_Geomag-Ground-Data-VirES.ipynb",
             "name": "Ground Obs Data Access",
             "class": "viresdemo",
