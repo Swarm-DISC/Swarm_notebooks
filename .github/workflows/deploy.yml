@@ -5,15 +5,14 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.15'
+  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:0.10.16'
 
 jobs:
   pre-commit:
     name: Format
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@v4
     - uses: pre-commit/action@v3.0.0
       with:
         extra_args: --hook-stage manual --all-files
@@ -26,8 +25,8 @@ jobs:
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
           docker pull ${{ env.DOCKER_IMAGE }}
-      - uses: actions/checkout@v2
-      - name: Execute notebooks and build book
+      - uses: actions/checkout@v4
+      - name: Execute notebooks using nbmake
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
@@ -37,8 +36,19 @@ jobs:
               export CDF_LIB=/opt/conda/lib && \
               viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
               viresclient set_default_server https://vires.services/ows && \
+              pip install nbmake pytest-xdist && \
+              pytest --numprocesses 2 --nbmake --overwrite \
+                notebooks/*.ipynb \
+                --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
+              '
+      - name: Build book
+        if: always()
+        run: |
+          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }} \
+            bash -c \
+              '
               pip install jupyter-book==0.12.3 && \
-              jupyter-book build --config _config.yml .
+              jupyter-book build --config _config-ci.yml .
               '
       - name: Deploy preview to Netlify
         if: always()
