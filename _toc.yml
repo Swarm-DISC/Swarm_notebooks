@@ -19,6 +19,13 @@ parts:
   - file: notebooks/02c__viresclient-API
   - file: notebooks/02d__viresclient-Large-Data
   - file: notebooks/02e1_Conjunction-Interface
+- caption: Swarm software
+  chapters:
+  - file: notebooks/07a1_SW-chaosmagpy
+  - file: notebooks/07b1_SW-pyamps
+  - file: notebooks/07c1_SW-pyswipe
+  - file: notebooks/07d1_SW-ibpmodel
+  - file: notebooks/07e1_SW-swarmface
 - caption: Swarm Product Demos
   chapters:
   - file: notebooks/03a1_Demo-MAGx_LR_1B
