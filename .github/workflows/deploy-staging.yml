@@ -5,7 +5,8 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:1.0.1'
+  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook'
+  TAG: '1.0.1'
 
 jobs:
   pre-commit:
@@ -24,15 +25,24 @@ jobs:
       - name: Pull docker image
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
-          docker pull ${{ env.DOCKER_IMAGE }}
+          docker pull ${{ env.DOCKER_IMAGE }}:${{ env.TAG }}
       - uses: actions/checkout@v4
+      - name: Add bookbuilder environment to container
+        run: |
+          docker run --name temp-container -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }}:${{ env.TAG }} \
+            bash -c \
+              '
+              mamba run --no-capture-output -n base python -m ipykernel install --user --name base && \
+              mamba create --name bookbuilder --file .bookbuilder/conda-linux-64.lock
+              '
+          docker commit temp-container ${{ env.DOCKER_IMAGE }}:customized
       - name: Execute notebooks using nbmake
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
             -e VIRES_TOKEN_STAGING=${{ secrets.VIRES_TOKEN_STAGING }} \
             -e VIRES_TOKEN_STAGING_DISC=${{ secrets.VIRES_TOKEN_STAGINGDISC}} \
-            ${{ env.DOCKER_IMAGE }} \
+            ${{ env.DOCKER_IMAGE }}:customized \
             bash -c \
               '
               export CDF_LIB=/opt/conda/lib && \
@@ -41,18 +51,16 @@ jobs:
               viresclient set_token https://staging.vires.services/ows $VIRES_TOKEN_STAGING && \
               viresclient set_token https://staging.viresdisc.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
               viresclient set_default_server https://vires.services/ows && \
-              pip install nbmake pytest-xdist && \
-              pytest --numprocesses 2 --nbmake --overwrite \
+              mamba run -n bookbuilder pytest --numprocesses 2 --nbmake --overwrite --nbmake-kernel=base \
                 notebooks/*.ipynb \
                 --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
               '
       - name: Build book
         if: always()
         run: |
-          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }} \
+          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }}:customized \
             bash -c \
               '
-              pip install jupyter-book==0.12.3 && \
               jupyter-book build --config _config-ci-staging.yml .
               '
       - name: Deploy preview to Netlify
