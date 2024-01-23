@@ -61,7 +61,7 @@ jobs:
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }}:customized \
             bash -c \
               '
-              jupyter-book build --config _config-ci-staging.yml .
+              mamba run -n bookbuilder jupyter-book build --config _config-ci-staging.yml .
               '
       - name: Deploy preview to Netlify
         if: always()
