@@ -30,7 +30,7 @@ jobs:
             RUN_REF="pr${{ github.event.number }}"
             BRANCH_NAME="${{ github.event.pull_request.base.ref }}"
             NETLIFY_ALIAS="${{ github.sha }}"
-            GH_DEPLOY_ENV=""
+            GH_DEPLOY_ENV="pull request"
             ENABLE_GH_DEPLOY="false"
           elif [ "${{ github.event_name }}" == "push" ]; then
             RUN_REF=$(echo "${{ github.ref }}" | sed 's|.*/||')
@@ -46,6 +46,12 @@ jobs:
             RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.PRODUCTION_TAG }}"
           fi
 
+          echo "RUN_REF=${RUN_REF}" >> $GITHUB_ENV
+          echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
+          echo "NETLIFY_ALIAS=${NETLIFY_ALIAS}" >> $GITHUB_ENV
+          echo "GH_DEPLOY_ENV=${GH_DEPLOY_ENV}" >> $GITHUB_ENV
+          echo "ENABLE_GH_DEPLOY=${ENABLE_GH_DEPLOY}" >> $GITHUB_ENV
+          echo "RESOLVED_DOCKER_IMAGE=${RESOLVED_DOCKER_IMAGE}" >> $GITHUB_ENV
       - name: Pull the relevant docker image
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
