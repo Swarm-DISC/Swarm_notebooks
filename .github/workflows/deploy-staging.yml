@@ -24,9 +24,13 @@ jobs:
           if [ "${{ github.event_name }}" == "pull_request" ]; then
             RUN_REF="pr${{ github.event.number }}"
             BRANCH_NAME="${{ github.event.pull_request.base.ref }}"
+            NETLIFY_ALIAS="${{ github.sha }}"
+            GH_DEPLOY_ENV="pull request"
           elif [ "${{ github.event_name }}" == "push" ]; then
             RUN_REF=$(echo "${{ github.ref }}" | sed 's|.*/||')
             BRANCH_NAME=${RUN_REF}
+            NETLIFY_ALIAS="preview-${BRANCH_NAME}"
+            GH_DEPLOY_ENV="${BRANCH_NAME}"
           fi
 
           if [ "$BRANCH_NAME" == "staging" ]; then
@@ -102,8 +106,13 @@ jobs:
           publish-dir: './_build/html'
           production-deploy: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          # RUN_REF is set to one of "master", "staging", "pr#"
           deploy-message: "Deploy from GitHub Actions (${{ env.RUN_REF }})"
-          alias: ${{ github.sha }}
+          # Alias is used in netlify URL
+          # This is set to one of: "preview-master", "preview-staging", git sha
+          alias: ${{ env.NETLIFY_ALIAS }}
+          # Github deployment environment is one of "master", "staging", "pull request"
+          github-deployment-environment: ${{ env.GH_DEPLOY_ENV }}
           enable-pull-request-comment: true
           enable-commit-comment: true
           overwrites-pull-request-comment: true
