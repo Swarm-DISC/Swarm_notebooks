@@ -16,7 +16,7 @@ env:
 
 jobs:
   book:
-    name: Build Jupyter Book (Staging)
+    name: Build Jupyter Book
     runs-on: ubuntu-latest
     steps:
       - name: Set run reference (branch name or PR number), branch name, and target docker image
@@ -29,17 +29,15 @@ jobs:
             BRANCH_NAME=${RUN_REF}
           fi
 
-          echo "RUN_REF=${RUN_REF}" >> $GITHUB_ENV
-          echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
-
-          if [ "${{ env.BRANCH_NAME }}" == "staging" ]; then
+          if [ "$BRANCH_NAME" == "staging" ]; then
             RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.STAGING_TAG }}"
-          elif [ "${{ env.BRANCH_NAME }}" == "master" ]; then
+          elif [ "$BRANCH_NAME" == "master" ]; then
             RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.PRODUCTION_TAG }}"
           fi
 
+          echo "RUN_REF=${RUN_REF}" >> $GITHUB_ENV
+          echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
           echo "RESOLVED_DOCKER_IMAGE=${RESOLVED_DOCKER_IMAGE}" >> $GITHUB_ENV
-          echo ${{ env.RESOLVED_DOCKER_IMAGE }}
       - name: Pull the relevant docker image
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
