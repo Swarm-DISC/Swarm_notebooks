@@ -27,12 +27,17 @@ jobs:
           elif [ "${{ github.event_name }}" == "push" ]; then
             RUN_REF=$(echo "${{ github.ref }}" | sed 's|.*/||')
             BRANCH_NAME=RUN_REF
+          fi
+
           echo "RUN_REF=${RUN_REF}" >> $GITHUB_ENV
           echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
+
           if [ "${{ env.BRANCH_NAME }}" == "staging" ]; then
             RESOLVED_DOCKER_IMAGE=${{ env.DOCKER_IMAGE }}:${{ env.STAGING_TAG }}
           elif [ "${{ env.BRANCH_NAME }}" == "master" ]; then
             RESOLVED_DOCKER_IMAGE=${{ env.DOCKER_IMAGE }}:${{ env.PRODUCTION_TAG }}
+          fi
+
           echo "RESOLVED_DOCKER_IMAGE=${RESOLVED_DOCKER_IMAGE}" >> $GITHUB_ENV
       - name: Pull the relevant docker image
         run: |
