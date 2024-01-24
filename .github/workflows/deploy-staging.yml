@@ -9,16 +9,7 @@ env:
   TAG: '1.0.1'
 
 jobs:
-  pre-commit:
-    name: Format
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: pre-commit/action@v3.0.0
-      with:
-        extra_args: --hook-stage manual --all-files
   book:
-    needs: pre-commit
     name: Build Jupyter Book (Staging)
     runs-on: ubuntu-latest
     steps:
