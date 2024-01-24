@@ -33,9 +33,9 @@ jobs:
           echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
 
           if [ "${{ env.BRANCH_NAME }}" == "staging" ]; then
-            RESOLVED_DOCKER_IMAGE=${{ env.DOCKER_IMAGE }}:${{ env.STAGING_TAG }}
+            RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}":"${{ env.STAGING_TAG }}"
           elif [ "${{ env.BRANCH_NAME }}" == "master" ]; then
-            RESOLVED_DOCKER_IMAGE=${{ env.DOCKER_IMAGE }}:${{ env.PRODUCTION_TAG }}
+            RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}":"${{ env.PRODUCTION_TAG }}"
           fi
 
           echo "RESOLVED_DOCKER_IMAGE=${RESOLVED_DOCKER_IMAGE}" >> $GITHUB_ENV
