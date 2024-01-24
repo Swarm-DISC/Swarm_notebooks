@@ -9,6 +9,11 @@ on:
       - master
   workflow_dispatch:
 
+# Only allow one such workflow to run at a time
+# (since the supplied VirES tokens will only allow 2 max async jobs)
+concurrency:
+  group: ${{ github.workflow }}
+
 env:
   DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook'
   PRODUCTION_TAG: '1.0.1'
@@ -19,18 +24,20 @@ jobs:
     name: Build Jupyter Book
     runs-on: ubuntu-latest
     steps:
-      - name: Set run reference (branch name or PR number), branch name, and target docker image
+      - name: Set run references (to switch master/staging/pr behaviour), and target docker image
         run: |
           if [ "${{ github.event_name }}" == "pull_request" ]; then
             RUN_REF="pr${{ github.event.number }}"
             BRANCH_NAME="${{ github.event.pull_request.base.ref }}"
             NETLIFY_ALIAS="${{ github.sha }}"
-            GH_DEPLOY_ENV="pull request"
+            GH_DEPLOY_ENV=""
+            ENABLE_GH_DEPLOY="false"
           elif [ "${{ github.event_name }}" == "push" ]; then
             RUN_REF=$(echo "${{ github.ref }}" | sed 's|.*/||')
             BRANCH_NAME=${RUN_REF}
             NETLIFY_ALIAS="preview-${BRANCH_NAME}"
             GH_DEPLOY_ENV="${BRANCH_NAME}"
+            ENABLE_GH_DEPLOY="true"
           fi
 
           if [ "$BRANCH_NAME" == "staging" ]; then
@@ -39,9 +46,6 @@ jobs:
             RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.PRODUCTION_TAG }}"
           fi
 
-          echo "RUN_REF=${RUN_REF}" >> $GITHUB_ENV
-          echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
-          echo "RESOLVED_DOCKER_IMAGE=${RESOLVED_DOCKER_IMAGE}" >> $GITHUB_ENV
       - name: Pull the relevant docker image
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
@@ -111,7 +115,8 @@ jobs:
           # Alias is used in netlify URL
           # This is set to one of: "preview-master", "preview-staging", git sha
           alias: ${{ env.NETLIFY_ALIAS }}
-          # Github deployment environment is one of "master", "staging", "pull request"
+          # Github deployment environment is one of "master", "staging"
+          enable-github-deployment: ${{ env.ENABLE_GH_DEPLOY }}
           github-deployment-environment: ${{ env.GH_DEPLOY_ENV }}
           enable-pull-request-comment: true
           enable-commit-comment: true
