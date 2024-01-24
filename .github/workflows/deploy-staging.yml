@@ -1,33 +1,55 @@
 on:
+  push:
+    branches:
+      - staging
+      - master
   pull_request:
     branches:
       - staging
+      - master
   workflow_dispatch:
 
 env:
   DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook'
-  TAG: '1.0.1'
+  PRODUCTION_TAG: '1.0.1'
+  STAGING_TAG: '1.0.1'
 
 jobs:
   book:
     name: Build Jupyter Book (Staging)
     runs-on: ubuntu-latest
     steps:
-      - name: Pull docker image
+      - name: Set run reference (branch name or PR number), branch name, and target docker image
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            RUN_REF="pr${{ github.event.number }}"
+            BRANCH_NAME="${{ github.event.pull_request.base.ref }}"
+          elif [ "${{ github.event_name }}" == "push" ]; then
+            RUN_REF=$(echo "${{ github.ref }}" | sed 's|.*/||')
+            BRANCH_NAME=RUN_REF
+          echo "RUN_REF=${RUN_REF}" >> $GITHUB_ENV
+          echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
+          if [ "${{ env.BRANCH_NAME }}" == "staging" ]; then
+            RESOLVED_DOCKER_IMAGE=${{ env.DOCKER_IMAGE }}:${{ env.STAGING_TAG }}
+          elif [ "${{ env.BRANCH_NAME }}" == "master" ]; then
+            RESOLVED_DOCKER_IMAGE=${{ env.DOCKER_IMAGE }}:${{ env.PRODUCTION_TAG }}
+          echo "RESOLVED_DOCKER_IMAGE=${RESOLVED_DOCKER_IMAGE}" >> $GITHUB_ENV
+      - name: Pull the relevant docker image
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
-          docker pull ${{ env.DOCKER_IMAGE }}:${{ env.TAG }}
+          docker pull ${{ env.RESOLVED_DOCKER_IMAGE }}
       - uses: actions/checkout@v4
       - name: Add bookbuilder environment to container
         run: |
-          docker run --name temp-container -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }}:${{ env.TAG }} \
+          docker run --name temp-container -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.RESOLVED_DOCKER_IMAGE }} \
             bash -c \
               '
               mamba run --no-capture-output -n base python -m ipykernel install --user --name base && \
               mamba create --name bookbuilder --file .bookbuilder/conda-linux-64.lock
               '
           docker commit temp-container ${{ env.DOCKER_IMAGE }}:customized
-      - name: Execute notebooks using nbmake
+      - name: Execute notebooks using nbmake (staging)
+        if: ${{ eq(env.BRANCH_NAME, "staging") }}
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
@@ -46,13 +68,28 @@ jobs:
                 notebooks/*.ipynb \
                 --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
               '
+      - name: Execute notebooks using nbmake (production)
+        if: ${{ eq(env.BRANCH_NAME, "master") }}
+        run: |
+          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
+            -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
+            ${{ env.DOCKER_IMAGE }}:customized \
+            bash -c \
+              '
+              export CDF_LIB=/opt/conda/lib && \
+              viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
+              viresclient set_default_server https://vires.services/ows && \
+              mamba run -n bookbuilder pytest --numprocesses 2 --nbmake --overwrite --nbmake-kernel=base \
+                notebooks/*.ipynb \
+                --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
+              '
       - name: Build book
         if: always()
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }}:customized \
             bash -c \
               '
-              mamba run -n bookbuilder jupyter-book build --config _config-ci-staging.yml .
+              mamba run -n bookbuilder jupyter-book build --config _config-ci-${{ env.BRANCH_NAME }}.yml .
               '
       - name: Deploy preview to Netlify
         if: always()
@@ -61,10 +98,8 @@ jobs:
           publish-dir: './_build/html'
           production-deploy: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Deploy from GitHub Actions (staging)"
-          github-deployment-environment: staging
-          github-deployment-description: "jupyter-book staging preview"
-          alias: preview-staging
+          deploy-message: "Deploy from GitHub Actions (${{ env.RUN_REF }})"
+          alias: ${{ github.sha }}
           enable-pull-request-comment: true
           enable-commit-comment: true
           overwrites-pull-request-comment: true
