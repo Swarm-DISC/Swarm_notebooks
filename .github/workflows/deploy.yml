@@ -1,54 +1,103 @@
 on:
+  push:
+    branches:
+      - staging
+      - master
   pull_request:
     branches:
+      - staging
       - master
   workflow_dispatch:
 
 env:
-  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook:1.0.1'
+  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook'
+  PRODUCTION_TAG: '1.0.1'
+  STAGING_TAG: '1.0.1'
 
 jobs:
-  pre-commit:
-    name: Format
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: pre-commit/action@v3.0.0
-      with:
-        extra_args: --hook-stage manual --all-files
   book:
-    needs: pre-commit
-    name: Build Jupyter Book (Production)
+    name: Build Jupyter Book
     runs-on: ubuntu-latest
     steps:
-      - name: Pull docker image
+      - name: Set run reference (branch name or PR number), branch name, and target docker image
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            RUN_REF="pr${{ github.event.number }}"
+            BRANCH_NAME="${{ github.event.pull_request.base.ref }}"
+            NETLIFY_ALIAS="${{ github.sha }}"
+            GH_DEPLOY_ENV="pull request"
+          elif [ "${{ github.event_name }}" == "push" ]; then
+            RUN_REF=$(echo "${{ github.ref }}" | sed 's|.*/||')
+            BRANCH_NAME=${RUN_REF}
+            NETLIFY_ALIAS="preview-${BRANCH_NAME}"
+            GH_DEPLOY_ENV="${BRANCH_NAME}"
+          fi
+
+          if [ "$BRANCH_NAME" == "staging" ]; then
+            RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.STAGING_TAG }}"
+          elif [ "$BRANCH_NAME" == "master" ]; then
+            RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.PRODUCTION_TAG }}"
+          fi
+
+          echo "RUN_REF=${RUN_REF}" >> $GITHUB_ENV
+          echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
+          echo "RESOLVED_DOCKER_IMAGE=${RESOLVED_DOCKER_IMAGE}" >> $GITHUB_ENV
+      - name: Pull the relevant docker image
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
-          docker pull ${{ env.DOCKER_IMAGE }}
+          docker pull ${{ env.RESOLVED_DOCKER_IMAGE }}
       - uses: actions/checkout@v4
-      - name: Execute notebooks using nbmake
+      - name: Add bookbuilder environment to container
+        run: |
+          docker run --name temp-container -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.RESOLVED_DOCKER_IMAGE }} \
+            bash -c \
+              '
+              mamba run --no-capture-output -n base python -m ipykernel install --user --name base && \
+              mamba create --name bookbuilder --file .bookbuilder/conda-linux-64.lock
+              '
+          docker commit temp-container ${{ env.DOCKER_IMAGE }}:customized
+      - name: Execute notebooks using nbmake (staging)
+        if: ${{ env.BRANCH_NAME == "staging" }}
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
-            ${{ env.DOCKER_IMAGE }} \
+            -e VIRES_TOKEN_STAGING=${{ secrets.VIRES_TOKEN_STAGING }} \
+            -e VIRES_TOKEN_STAGING_DISC=${{ secrets.VIRES_TOKEN_STAGINGDISC}} \
+            ${{ env.DOCKER_IMAGE }}:customized \
+            bash -c \
+              '
+              export CDF_LIB=/opt/conda/lib && \
+              pip install --upgrade 'git+https://github.com/ESA-VirES/VirES-Python-Client@staging#egg=viresclient' && \
+              viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
+              viresclient set_token https://staging.vires.services/ows $VIRES_TOKEN_STAGING && \
+              viresclient set_token https://staging.viresdisc.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
+              viresclient set_default_server https://vires.services/ows && \
+              mamba run -n bookbuilder pytest --numprocesses 2 --nbmake --overwrite --nbmake-kernel=base \
+                notebooks/*.ipynb \
+                --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
+              '
+      - name: Execute notebooks using nbmake (production)
+        if: ${{ env.BRANCH_NAME == "master" }}
+        run: |
+          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
+            -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
+            ${{ env.DOCKER_IMAGE }}:customized \
             bash -c \
               '
               export CDF_LIB=/opt/conda/lib && \
               viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
               viresclient set_default_server https://vires.services/ows && \
-              pip install nbmake pytest-xdist && \
-              pytest --numprocesses 2 --nbmake --overwrite \
+              mamba run -n bookbuilder pytest --numprocesses 2 --nbmake --overwrite --nbmake-kernel=base \
                 notebooks/*.ipynb \
                 --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
               '
       - name: Build book
         if: always()
         run: |
-          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }} \
+          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }}:customized \
             bash -c \
               '
-              pip install jupyter-book==0.12.3 && \
-              jupyter-book build --config _config-ci.yml .
+              mamba run -n bookbuilder jupyter-book build --config _config-ci-${{ env.BRANCH_NAME }}.yml .
               '
       - name: Deploy preview to Netlify
         if: always()
@@ -57,10 +106,13 @@ jobs:
           publish-dir: './_build/html'
           production-deploy: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Deploy from GitHub Actions (master)"
-          github-deployment-environment: production-preview
-          github-deployment-description: "jupyter-book production preview"
-          alias: preview-master
+          # RUN_REF is set to one of "master", "staging", "pr#"
+          deploy-message: "Deploy from GitHub Actions (${{ env.RUN_REF }})"
+          # Alias is used in netlify URL
+          # This is set to one of: "preview-master", "preview-staging", git sha
+          alias: ${{ env.NETLIFY_ALIAS }}
+          # Github deployment environment is one of "master", "staging", "pull request"
+          github-deployment-environment: ${{ env.GH_DEPLOY_ENV }}
           enable-pull-request-comment: true
           enable-commit-comment: true
           overwrites-pull-request-comment: true
