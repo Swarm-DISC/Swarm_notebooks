@@ -57,7 +57,7 @@ jobs:
               '
           docker commit temp-container ${{ env.DOCKER_IMAGE }}:customized
       - name: Execute notebooks using nbmake (staging)
-        if: ${{ env.BRANCH_NAME == "staging" }}
+        if: env.BRANCH_NAME == "staging"
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
@@ -77,7 +77,7 @@ jobs:
                 --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
               '
       - name: Execute notebooks using nbmake (production)
-        if: ${{ env.BRANCH_NAME == "master" }}
+        if: env.BRANCH_NAME == "master"
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
