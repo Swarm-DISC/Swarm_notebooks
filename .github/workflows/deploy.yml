@@ -72,8 +72,8 @@ jobs:
               mamba create --name bookbuilder --file .bookbuilder/conda-linux-64.lock
               '
           docker commit temp-container ${{ env.DOCKER_IMAGE }}:customized
-      - name: Execute notebooks using nbmake (staging)
-        if: env.BRANCH_NAME == 'staging'
+      - name: Execute notebooks using nbmake (staging / other)
+        if: env.BRANCH_NAME != 'master'
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
