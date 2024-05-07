@@ -28,7 +28,6 @@ jobs:
         run: |
 
           BRANCH_NAME=$(echo "${{ github.ref }}" | sed 's|.*/||')
-          NETLIFY_ALIAS="preview-${BRANCH_NAME}-${{ github.sha }}"
           GH_DEPLOY_ENV="${BRANCH_NAME}"
           ENABLE_GH_DEPLOY=$(if [[ "$BRANCH_NAME" == "master" || "$BRANCH_NAME" == "staging" ]]; then echo "true"; else echo "false"; fi)
 
@@ -51,7 +50,6 @@ jobs:
 
           echo "RUN_REF=${RUN_REF}" >> $GITHUB_ENV
           echo "TARGET_BRANCH_NAME=${TARGET_BRANCH_NAME}" >> $GITHUB_ENV
-          echo "NETLIFY_ALIAS=${NETLIFY_ALIAS}" >> $GITHUB_ENV
           echo "GH_DEPLOY_ENV=${GH_DEPLOY_ENV}" >> $GITHUB_ENV
           echo "ENABLE_GH_DEPLOY=${ENABLE_GH_DEPLOY}" >> $GITHUB_ENV
           echo "RESOLVED_DOCKER_IMAGE=${RESOLVED_DOCKER_IMAGE}" >> $GITHUB_ENV
@@ -121,9 +119,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # RUN_REF is set to one of "master", "staging", "pr#"
           deploy-message: "Deploy from GitHub Actions (${{ env.RUN_REF }})"
-          # Alias is used in netlify URL
-          # This is set to one of: "preview-master", "preview-staging", git sha
-          alias: ${{ env.NETLIFY_ALIAS }}
           # Github deployment environment is one of "master", "staging"
           enable-github-deployment: ${{ env.ENABLE_GH_DEPLOY }}
           github-deployment-environment: ${{ env.GH_DEPLOY_ENV }}
