@@ -46,10 +46,10 @@ jobs:
             ENABLE_GH_DEPLOY=$(if [[ "$BRANCH_NAME" == "master" || "$BRANCH_NAME" == "staging" ]]; then echo "true"; else echo "false"; fi)
           fi
 
-          if [ "$BRANCH_NAME" == "staging" ]; then
-            RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.STAGING_TAG }}"
-          elif [ "$BRANCH_NAME" == "master" ]; then
+          if [ "$BRANCH_NAME" == "master" ]; then
             RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.PRODUCTION_TAG }}"
+          else
+            RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.STAGING_TAG }}"
           fi
 
           echo "RUN_REF=${RUN_REF}" >> $GITHUB_ENV
