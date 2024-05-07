@@ -9,6 +9,11 @@ on:
       - master
   workflow_dispatch:
 
+# Only allow one such workflow to run at a time
+# (since the supplied VirES tokens will only allow 2 max async jobs)
+concurrency:
+  group: ${{ github.workflow }}
+
 env:
   DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook'
   PRODUCTION_TAG: '1.0.1'
@@ -19,28 +24,34 @@ jobs:
     name: Build Jupyter Book
     runs-on: ubuntu-latest
     steps:
-      - name: Set run reference (branch name or PR number), branch name, and target docker image
+      - name: Set run references (to switch master/staging/pr behaviour), and target docker image
         run: |
+
+          BRANCH_NAME=$(echo "${{ github.ref }}" | sed 's|.*/||')
+          GH_DEPLOY_ENV="${BRANCH_NAME}"
+          ENABLE_GH_DEPLOY=$(if [[ "$BRANCH_NAME" == "master" || "$BRANCH_NAME" == "staging" ]]; then echo "true"; else echo "false"; fi)
+
           if [ "${{ github.event_name }}" == "pull_request" ]; then
             RUN_REF="pr${{ github.event.number }}"
-            BRANCH_NAME="${{ github.event.pull_request.base.ref }}"
-            NETLIFY_ALIAS="${{ github.sha }}"
-            GH_DEPLOY_ENV="pull request"
+            TARGET_BRANCH_NAME="${{ github.event.pull_request.base.ref }}"
           elif [ "${{ github.event_name }}" == "push" ]; then
-            RUN_REF=$(echo "${{ github.ref }}" | sed 's|.*/||')
-            BRANCH_NAME=${RUN_REF}
-            NETLIFY_ALIAS="preview-${BRANCH_NAME}"
-            GH_DEPLOY_ENV="${BRANCH_NAME}"
+            RUN_REF="${BRANCH_NAME}"
+            TARGET_BRANCH_NAME=${BRANCH_NAME}
+          elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            RUN_REF="${BRANCH_NAME}"
+            TARGET_BRANCH_NAME="master"
           fi
 
-          if [ "$BRANCH_NAME" == "staging" ]; then
+          if [ "$TARGET_BRANCH_NAME" == "staging" ]; then
             RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.STAGING_TAG }}"
-          elif [ "$BRANCH_NAME" == "master" ]; then
+          else
             RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.PRODUCTION_TAG }}"
           fi
 
           echo "RUN_REF=${RUN_REF}" >> $GITHUB_ENV
-          echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
+          echo "TARGET_BRANCH_NAME=${TARGET_BRANCH_NAME}" >> $GITHUB_ENV
+          echo "GH_DEPLOY_ENV=${GH_DEPLOY_ENV}" >> $GITHUB_ENV
+          echo "ENABLE_GH_DEPLOY=${ENABLE_GH_DEPLOY}" >> $GITHUB_ENV
           echo "RESOLVED_DOCKER_IMAGE=${RESOLVED_DOCKER_IMAGE}" >> $GITHUB_ENV
       - name: Pull the relevant docker image
         run: |
@@ -56,8 +67,8 @@ jobs:
               mamba create --name bookbuilder --file .bookbuilder/conda-linux-64.lock
               '
           docker commit temp-container ${{ env.DOCKER_IMAGE }}:customized
-      - name: Execute notebooks using nbmake (staging)
-        if: ${{ env.BRANCH_NAME == "staging" }}
+      - name: Execute notebooks using nbmake (staging / other)
+        if: env.TARGET_BRANCH_NAME == 'staging'
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
@@ -77,7 +88,7 @@ jobs:
                 --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
               '
       - name: Execute notebooks using nbmake (production)
-        if: ${{ env.BRANCH_NAME == "master" }}
+        if: env.TARGET_BRANCH_NAME == 'master'
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
@@ -97,24 +108,22 @@ jobs:
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }}:customized \
             bash -c \
               '
-              mamba run -n bookbuilder jupyter-book build --config _config-ci-${{ env.BRANCH_NAME }}.yml .
+              mamba run -n bookbuilder jupyter-book build --config _config-ci-${{ env.TARGET_BRANCH_NAME }}.yml .
               '
       - name: Deploy preview to Netlify
         if: always()
-        uses: nwtgck/actions-netlify@v1.2
+        uses: nwtgck/actions-netlify@v3.0
         with:
           publish-dir: './_build/html'
           production-deploy: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # RUN_REF is set to one of "master", "staging", "pr#"
           deploy-message: "Deploy from GitHub Actions (${{ env.RUN_REF }})"
-          # Alias is used in netlify URL
-          # This is set to one of: "preview-master", "preview-staging", git sha
-          alias: ${{ env.NETLIFY_ALIAS }}
-          # Github deployment environment is one of "master", "staging", "pull request"
+          # Github deployment environment is one of "master", "staging"
+          enable-github-deployment: ${{ env.ENABLE_GH_DEPLOY }}
           github-deployment-environment: ${{ env.GH_DEPLOY_ENV }}
           enable-pull-request-comment: true
-          enable-commit-comment: true
+          enable-commit-comment: false
           overwrites-pull-request-comment: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
