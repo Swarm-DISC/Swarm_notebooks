@@ -123,7 +123,7 @@ jobs:
           enable-github-deployment: ${{ env.ENABLE_GH_DEPLOY }}
           github-deployment-environment: ${{ env.GH_DEPLOY_ENV }}
           enable-pull-request-comment: true
-          enable-commit-comment: true
+          enable-commit-comment: false
           overwrites-pull-request-comment: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
