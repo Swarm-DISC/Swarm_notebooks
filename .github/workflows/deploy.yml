@@ -38,6 +38,12 @@ jobs:
             NETLIFY_ALIAS="preview-${BRANCH_NAME}"
             GH_DEPLOY_ENV="${BRANCH_NAME}"
             ENABLE_GH_DEPLOY="true"
+          elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            RUN_REF=$(echo "${{ github.ref }}" | sed 's|.*/||')
+            BRANCH_NAME="${{ github.ref }}"
+            NETLIFY_ALIAS="preview-${BRANCH_NAME}"
+            GH_DEPLOY_ENV="${BRANCH_NAME}"
+            ENABLE_GH_DEPLOY=$(if [[ "$BRANCH_NAME" == "master" || "$BRANCH_NAME" == "staging" ]]; then echo "true"; else echo "false"; fi)
           fi
 
           if [ "$BRANCH_NAME" == "staging" ]; then
