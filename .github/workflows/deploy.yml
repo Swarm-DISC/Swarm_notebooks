@@ -26,34 +26,31 @@ jobs:
     steps:
       - name: Set run references (to switch master/staging/pr behaviour), and target docker image
         run: |
+
+          BRANCH_NAME=$(echo "${{ github.ref }}" | sed 's|.*/||')
+          NETLIFY_ALIAS="preview-${BRANCH_NAME}-${{ github.sha }}"
+          GH_DEPLOY_ENV="${BRANCH_NAME}"
+          ENABLE_GH_DEPLOY=$(if [[ "$BRANCH_NAME" == "master" || "$BRANCH_NAME" == "staging" ]]; then echo "true"; else echo "false"; fi)
+
           if [ "${{ github.event_name }}" == "pull_request" ]; then
             RUN_REF="pr${{ github.event.number }}"
-            BRANCH_NAME="${{ github.event.pull_request.base.ref }}"
-            NETLIFY_ALIAS="${{ github.sha }}"
-            GH_DEPLOY_ENV="pull request"
-            ENABLE_GH_DEPLOY="false"
+            TARGET_BRANCH_NAME="${{ github.event.pull_request.base.ref }}"
           elif [ "${{ github.event_name }}" == "push" ]; then
-            RUN_REF=$(echo "${{ github.ref }}" | sed 's|.*/||')
-            BRANCH_NAME=${RUN_REF}
-            NETLIFY_ALIAS="preview-${BRANCH_NAME}"
-            GH_DEPLOY_ENV="${BRANCH_NAME}"
-            ENABLE_GH_DEPLOY="true"
+            RUN_REF="${BRANCH_NAME}"
+            TARGET_BRANCH_NAME=${BRANCH_NAME}
           elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            RUN_REF=$(echo "${{ github.ref }}" | sed 's|.*/||')
-            BRANCH_NAME="${{ github.ref }}"
-            NETLIFY_ALIAS="preview-${BRANCH_NAME}"
-            GH_DEPLOY_ENV="${BRANCH_NAME}"
-            ENABLE_GH_DEPLOY=$(if [[ "$BRANCH_NAME" == "master" || "$BRANCH_NAME" == "staging" ]]; then echo "true"; else echo "false"; fi)
+            RUN_REF="${BRANCH_NAME}"
+            TARGET_BRANCH_NAME="master"
           fi
 
-          if [ "$BRANCH_NAME" == "master" ]; then
-            RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.PRODUCTION_TAG }}"
-          else
+          if [ "$TARGET_BRANCH_NAME" == "staging" ]; then
             RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.STAGING_TAG }}"
+          else
+            RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.PRODUCTION_TAG }}"
           fi
 
           echo "RUN_REF=${RUN_REF}" >> $GITHUB_ENV
-          echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
+          echo "TARGET_BRANCH_NAME=${TARGET_BRANCH_NAME}" >> $GITHUB_ENV
           echo "NETLIFY_ALIAS=${NETLIFY_ALIAS}" >> $GITHUB_ENV
           echo "GH_DEPLOY_ENV=${GH_DEPLOY_ENV}" >> $GITHUB_ENV
           echo "ENABLE_GH_DEPLOY=${ENABLE_GH_DEPLOY}" >> $GITHUB_ENV
@@ -73,7 +70,7 @@ jobs:
               '
           docker commit temp-container ${{ env.DOCKER_IMAGE }}:customized
       - name: Execute notebooks using nbmake (staging / other)
-        if: env.BRANCH_NAME != 'master'
+        if: env.TARGET_BRANCH_NAME == 'staging'
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
@@ -93,7 +90,7 @@ jobs:
                 --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
               '
       - name: Execute notebooks using nbmake (production)
-        if: env.BRANCH_NAME == 'master'
+        if: env.TARGET_BRANCH_NAME == 'master'
         run: |
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
             -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
@@ -113,11 +110,11 @@ jobs:
           docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }}:customized \
             bash -c \
               '
-              mamba run -n bookbuilder jupyter-book build --config _config-ci-${{ env.BRANCH_NAME }}.yml .
+              mamba run -n bookbuilder jupyter-book build --config _config-ci-${{ env.TARGET_BRANCH_NAME }}.yml .
               '
       - name: Deploy preview to Netlify
         if: always()
-        uses: nwtgck/actions-netlify@v1.2
+        uses: nwtgck/actions-netlify@v3.0
         with:
           publish-dir: './_build/html'
           production-deploy: false
