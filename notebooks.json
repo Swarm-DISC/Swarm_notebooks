@@ -164,17 +164,35 @@
             "group": "Swarm Product Demos",
             "rank": 17
         },{
+            "path": "notebooks/03l1_Demo-DNS.ipynb",
+            "name": "DNS: Thermosphere density",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 18
+        },{
+            "path": "notebooks/03l2_Demo-WND.ipynb",
+            "name": "WND: Thermosphere winds",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 19
+        },{
+            "path": "notebooks/03l3_Demo-Conjunctions-TOLEOS.ipynb",
+            "name": "Conjunctions (TOLEOS)",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 20
+        },{
             "path": "notebooks/03y1_Multi-Mission-Intro.ipynb",
             "name": "Multi-mission MAG",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 18
+            "rank": 98
         },{
             "path": "notebooks/03z1_External-Data.ipynb",
             "name": "External data (HAPI)",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 19
+            "rank": 99
         },{
             "path": "notebooks/06a1_FAST-Intro.ipynb",
             "name": "Intro FAST data",
