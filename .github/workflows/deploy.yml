@@ -17,7 +17,7 @@ concurrency:
 env:
   DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook'
   PRODUCTION_TAG: '1.0.1'
-  STAGING_TAG: '1.0.1'
+  STAGING_TAG: '1.0.2rc1'
 
 jobs:
   book:
