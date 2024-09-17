@@ -16,8 +16,8 @@ concurrency:
 
 env:
   DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook'
-  PRODUCTION_TAG: '1.0.1'
-  STAGING_TAG: '1.0.1'
+  PRODUCTION_TAG: '1.0.3'
+  STAGING_TAG: '1.0.3'
 
 jobs:
   book:
@@ -81,7 +81,7 @@ jobs:
               pip install --upgrade 'git+https://github.com/ESA-VirES/VirES-Python-Client@staging#egg=viresclient' && \
               viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
               viresclient set_token https://staging.vires.services/ows $VIRES_TOKEN_STAGING && \
-              viresclient set_token https://staging.viresdisc.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
+              viresclient set_token https://disc.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
               viresclient set_default_server https://vires.services/ows && \
               mamba run -n bookbuilder pytest --numprocesses 2 --nbmake --overwrite --nbmake-kernel=base \
                 notebooks/*.ipynb \
