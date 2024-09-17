@@ -145,42 +145,49 @@
             "class": "viresdemo",
             "group": "Swarm Product Demos",
             "rank": 14
+        },
+        {
+            "path": "notebooks/03j2_Demo-PRISM-PPIxFAC.ipynb",
+            "name": "PPI: Plasmapause index",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 15
         },{
             "path": "notebooks/03k1_Demo-EFIxTIE.ipynb",
             "name": "EFIxTIE: Ion temperatures",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 15
+            "rank": 16
         },{
             "path": "notebooks/03k2_Demo-EFIxTCT.ipynb",
             "name": "EFIxTCT: Ion flows",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 16
+            "rank": 17
         },{
             "path": "notebooks/03k3_Demo-EFIxIDM.ipynb",
             "name": "EFIxIDM: Ion drift & mass",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 17
+            "rank": 18
         },{
             "path": "notebooks/03l1_Demo-DNS.ipynb",
             "name": "DNS: Thermosphere density",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 18
+            "rank": 19
         },{
             "path": "notebooks/03l2_Demo-WND.ipynb",
             "name": "WND: Thermosphere winds",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 19
+            "rank": 20
         },{
             "path": "notebooks/03l3_Demo-Conjunctions-TOLEOS.ipynb",
             "name": "Conjunctions (TOLEOS)",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 20
+            "rank": 21
         },{
             "path": "notebooks/03y1_Multi-Mission-Intro.ipynb",
             "name": "Multi-mission MAG",

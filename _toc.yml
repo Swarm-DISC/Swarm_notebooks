@@ -42,6 +42,7 @@ parts:
   - file: notebooks/03h3_Demo-AEBS-AOBxFAC
   - file: notebooks/03i1_Demo-VOBS
   - file: notebooks/03j1_Demo-PRISM-MITx
+  - file: notebooks/03j2_Demo-PRISM-PPIxFAC
   - file: notebooks/03k1_Demo-EFIxTIE
   - file: notebooks/03k2_Demo-EFIxTCT
   - file: notebooks/03k3_Demo-EFIxIDM
