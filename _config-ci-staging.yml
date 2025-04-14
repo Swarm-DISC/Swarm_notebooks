@@ -33,11 +33,12 @@ html:
   announcement: '
     <div class="custom-header-container">
         <div>
-            <a href="https://viresclient.readthedocs.io" target="_blank" class="link">viresclient</a>
-            <a href="https://vires.services" target="_blank" class="link">VirES for Swarm</a>
-            <a href="https://vre.vires.services" target="_blank" class="link">Swarm JupyterHub</a>
+            <a href="https://viresclient.readthedocs.io" class="link">viresclient</a>
+            
             <a href="" class="link-selected">Swarm Notebooks</a>
-            <a href="https://swarmpal.readthedocs.io" target="_blank" class="link">SwarmPAL</a>
+            <a href="https://swarmpal.readthedocs.io" class="link">SwarmPAL</a>
+            <a href="https://vires.services" target="_blank" class="link">VirES for Swarm ↗</a>
+            <a href="https://vre.vires.services" target="_blank" class="link">Swarm JupyterHub ↗</a>
         </div>
     </div>
 
