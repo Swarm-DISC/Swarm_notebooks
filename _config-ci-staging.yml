@@ -30,6 +30,41 @@ html:
   home_page_in_navbar       : true
   comments:
     hypothesis              : true
+  announcement: '
+    <div class="custom-header-container">
+        <div>
+            <a href="https://viresclient.readthedocs.io" target="_blank" class="link">viresclient</a>
+            <a href="https://vires.services" target="_blank" class="link">VirES for Swarm</a>
+            <a href="https://vre.vires.services" target="_blank" class="link">Swarm JupyterHub</a>
+            <a href="" class="link-selected">Swarm Notebooks</a>
+            <a href="https://swarmpal.readthedocs.io" target="_blank" class="link">SwarmPAL</a>
+        </div>
+    </div>
+
+    <style>
+        .custom-header-container {}
+
+        .custom-header-container .link {
+            margin: 0 10px;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .custom-header-container .link:hover {
+            color: #1e90ff !important;
+        }
+
+        .custom-header-container .link-selected {
+            margin: 0 10px;
+            padding: 5px 10px;
+            text-decoration: none;
+            background-color: #ccc;
+            color: black;
+            border-radius: 5px;
+        }
+    </style>
+  '
 
 # See https://jupyterbook.org/content/content-blocks.html
 parse:
