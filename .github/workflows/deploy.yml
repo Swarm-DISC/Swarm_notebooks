@@ -39,7 +39,7 @@ jobs:
             TARGET_BRANCH_NAME=${BRANCH_NAME}
           elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             RUN_REF="${BRANCH_NAME}"
-            TARGET_BRANCH_NAME="master"
+            TARGET_BRANCH_NAME="${BRANCH_NAME}"
           fi
 
           if [ "$TARGET_BRANCH_NAME" == "staging" ]; then
