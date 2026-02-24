@@ -16,3 +16,9 @@ repos:
     hooks:
     - id: jupytext
       args: [--from, ipynb, --to, ipynb, --update-metadata, '{"kernelspec": {"display_name": "Python 3 (ipykernel)", "language": "python", "name": "python3"}}']
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black-jupyter
+        name: black (notebooks)
+        types_or: [jupyter]
