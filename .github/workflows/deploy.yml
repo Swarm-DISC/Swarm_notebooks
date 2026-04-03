@@ -16,8 +16,8 @@ concurrency:
 
 env:
   DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook'
-  PRODUCTION_TAG: '1.0.11'
-  STAGING_TAG: '1.0.11'
+  PRODUCTION_TAG: '1.0.14'
+  STAGING_TAG: '1.0.14'
 
 jobs:
   book:
@@ -57,7 +57,7 @@ jobs:
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
           docker pull ${{ env.RESOLVED_DOCKER_IMAGE }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Add bookbuilder environment to container
         run: |
           docker run --name temp-container -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.RESOLVED_DOCKER_IMAGE }} \
@@ -84,8 +84,7 @@ jobs:
               viresclient set_token https://disc.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
               viresclient set_default_server https://vires.services/ows && \
               mamba run -n bookbuilder pytest --numprocesses 2 --nbmake --overwrite --nbmake-kernel=base \
-                notebooks/*.ipynb \
-                --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
+                notebooks/*.ipynb docs/*.ipynb
               '
       - name: Execute notebooks using nbmake (production)
         if: env.TARGET_BRANCH_NAME == 'master'
@@ -99,8 +98,7 @@ jobs:
               viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
               viresclient set_default_server https://vires.services/ows && \
               mamba run -n bookbuilder pytest --numprocesses 2 --nbmake --overwrite --nbmake-kernel=base \
-                notebooks/*.ipynb \
-                --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
+                notebooks/*.ipynb docs/*.ipynb
               '
       - name: Build book
         if: always()
