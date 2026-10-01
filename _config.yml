@@ -1,5 +1,9 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
+# This config builds the book without executing the notebooks first
+# Execute notebooks first using nbmake, e.g.:
+# pytest --numprocesses 2 --nbmake --overwrite
+# (See .github/workflows/deploy.yml)
 
 title: Swarm Notebooks
 author: "Ashley Smith et al."
@@ -7,9 +11,7 @@ logo: ""
 only_build_toc_files: true
 
 execute:
-  execute_notebooks: cache
-  run_in_temp: true
-  timeout: 120
+  execute_notebooks: off
 
 launch_buttons:
   notebook_interface        : jupyterlab
@@ -28,6 +30,51 @@ html:
   home_page_in_navbar       : true
   comments:
     hypothesis              : true
+  announcement: '
+    <div class="custom-header-container">
+        <div>
+            <a href="https://viresclient.readthedocs.io" class="link">viresclient</a>
+            
+            <a href="" class="link-selected">Swarm Notebooks</a>
+            <a href="https://swarmpal.readthedocs.io" class="link">SwarmPAL</a>
+            <a href="https://vires.services" target="_blank" class="link">VirES for Swarm ↗</a>
+            <a href="https://vre.vires.services" target="_blank" class="link">Swarm JupyterHub ↗</a>
+            <a href="https://dev.swarmdisc.org/dashboards/vires-query" target="_blank" class="link link-highlight">New! Query builder↗</a>
+        </div>
+    </div>
+
+    <style>
+        .custom-header-container {}
+
+        .custom-header-container .link {
+            margin: 0 10px;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .custom-header-container .link:hover {
+            color: #1e90ff !important;
+        }
+
+        .custom-header-container .link-highlight {
+            background-color: #ffc107;
+            color: #333 !important;
+            border-radius: 4px;
+            font-weight: bold;
+            padding: 3px 8px;
+        }
+
+        .custom-header-container .link-selected {
+            margin: 0 10px;
+            padding: 5px 10px;
+            text-decoration: none;
+            background-color: #ccc;
+            color: black;
+            border-radius: 5px;
+        }
+    </style>
+  '
 
 # See https://jupyterbook.org/content/content-blocks.html
 parse:

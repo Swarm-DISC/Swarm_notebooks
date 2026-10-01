@@ -50,6 +50,7 @@ parts:
   - file: notebooks/03l2_Demo-WND
   - file: notebooks/03l3_Demo-Conjunctions-TOLEOS
   - file: notebooks/03y1_Multi-Mission-Intro
+  - file: notebooks/03y2_Demo-CHAMP-MAG
   - file: notebooks/03z1_External-Data
 - caption: FAST data
   chapters:

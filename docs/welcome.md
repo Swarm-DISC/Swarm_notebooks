@@ -6,17 +6,22 @@ Hello! Welcome to **Swarm Notebooks** - a community resource to help people make
 
 These pages act as an extended documentation on usage of the [*viresclient*](https://viresclient.readthedocs.io) Python package and how to use it together with other packages. All the recipes on these pages are tested to work on the latest version of the VRE, but they are also all portable so that they will work on other systems if you have the right packages installed.
 
-:::{admonition} Looking for more resources?
-:class: seealso
-- Read more about the [Swarm data products](https://earth.esa.int/eogateway/missions/swarm/data)
-- Check the list of other tools and services at [Magnetic Earth](https://magneticearth.org/pages/software.html), and the [Python in Heliophysics Community](https://heliopython.org/)
-:::
-
 :::{admonition} Did you know?
 :class: tip
+Read more:
+- [What is the Swarm Virtual Workspace for Earth Scientists (VirES)?](https://earth.esa.int/eogateway/infographic/what-is-the-swarm-virtual-workspace-for-earth-scientists-vires)
+- [Earth scientists better exploit Swarm data with virtual workspace](https://earth.esa.int/eogateway/news/earth-scientists-better-exploit-swarm-data-with-virtual-workspace)
+
 VirES provides access to more than just Swarm data:
 - [Geomagnetic observatories on the ground](https://notebooks.vires.services/notebooks/04c2_geomag-ground-data-vires)
 - [Calibrated magnetometer data from Cryosat-2, GRACE and more](https://notebooks.vires.services/notebooks/03y1_multi-mission-intro)
+:::
+
+:::{admonition} Looking for more resources?
+:class: seealso
+- Read more about the [Swarm data products](https://earth.esa.int/eogateway/missions/swarm/data)
+  - [Browse the handbook](https://swarmhandbook.earth.esa.int/)
+- Check the list of other tools and services at [Magnetic Earth](https://magneticearth.org/pages/software.html), and the [Python in Heliophysics Community](https://heliopython.org/)
 :::
 
 ## How to use this resource
@@ -35,36 +40,33 @@ Some of these pages are generated from Jupyter notebooks which can be interacted
 - If you have problems with your VirES account or for other enquiries, please email [info@vires.services](mailto:info@vires.services)
 :::
 
-<!-- https://jupyterbook.org/content/content-blocks.html#panels -->
-````{panels}
-:column: col-sm
-```{link-button} https://vires.services
-:text: 
-:classes: stretched-link
-```
-![vre_logo](images/vre_logo.svg)
----
-```{link-button} https://eox.at
-:text: 
-:classes: stretched-link
-```
-![eox_logo](images/EOX_Logo.png)
----
-```{link-button} https://earth.esa.int/eogateway/activities/swarm-disc
-:text: 
-:classes: stretched-link
-```
-![disc_logo](images/swarm-disc.png)
----
-```{link-button} https://earth.esa.int/eogateway/missions/swarm
-:text: 
-:classes: stretched-link
-```
-![disc_logo](images/swarm_logo.png)
----
-```{link-button} https://www.esa.int
-:text: 
-:classes: stretched-link
-```
-![disc_logo](images/ESA_logo.png)
+`````{grid} 3 3 5 5
+:gutter: 2
+:class-row: align-items-center
+
+````{grid-item-card}
+:link: https://vires.services
+:img-top: images/vre_logo.svg
 ````
+
+````{grid-item-card}
+:link: https://eox.at
+:img-top: images/EOX_Logo.png
+````
+
+````{grid-item-card}
+:link: https://earth.esa.int/eogateway/activities/swarm-disc
+:img-top: images/swarm-disc.png
+````
+
+````{grid-item-card}
+:link: https://earth.esa.int/eogateway/missions/swarm
+:img-top: images/swarm_logo.png
+````
+
+````{grid-item-card}
+:link: https://www.esa.int
+:img-top: images/ESA_logo.png
+````
+
+`````

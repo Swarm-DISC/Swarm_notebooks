@@ -15,18 +15,16 @@ concurrency:
   group: ${{ github.workflow }}
 
 env:
-  DOCKER_IMAGE: 'registry.gitlab.eox.at/esa/vires_vre_ops/vre-swarm-notebook'
-  PRODUCTION_TAG: '1.0.11'
-  STAGING_TAG: '1.0.11'
+  PRODUCTION_TAG: '1.0.14'
+  STAGING_TAG: '1.0.14'
 
 jobs:
   book:
     name: Build Jupyter Book
     runs-on: ubuntu-latest
     steps:
-      - name: Set run references (to switch master/staging/pr behaviour), and target docker image
+      - name: Set run references
         run: |
-
           BRANCH_NAME=$(echo "${{ github.ref }}" | sed 's|.*/||')
           GH_DEPLOY_ENV="${BRANCH_NAME}"
           ENABLE_GH_DEPLOY=$(if [[ "$BRANCH_NAME" == "master" || "$BRANCH_NAME" == "staging" ]]; then echo "true"; else echo "false"; fi)
@@ -43,73 +41,41 @@ jobs:
           fi
 
           if [ "$TARGET_BRANCH_NAME" == "staging" ]; then
-            RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.STAGING_TAG }}"
+            VRE_TAG="${{ env.STAGING_TAG }}"
           else
-            RESOLVED_DOCKER_IMAGE="${{ env.DOCKER_IMAGE }}:${{ env.PRODUCTION_TAG }}"
+            VRE_TAG="${{ env.PRODUCTION_TAG }}"
           fi
 
           echo "RUN_REF=${RUN_REF}" >> $GITHUB_ENV
           echo "TARGET_BRANCH_NAME=${TARGET_BRANCH_NAME}" >> $GITHUB_ENV
           echo "GH_DEPLOY_ENV=${GH_DEPLOY_ENV}" >> $GITHUB_ENV
           echo "ENABLE_GH_DEPLOY=${ENABLE_GH_DEPLOY}" >> $GITHUB_ENV
-          echo "RESOLVED_DOCKER_IMAGE=${RESOLVED_DOCKER_IMAGE}" >> $GITHUB_ENV
-      - name: Pull the relevant docker image
+          echo "VRE_TAG=${VRE_TAG}" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v6
+
+      - name: Login to Docker registry
         run: |
           echo ${{ secrets.EOX_REGISTRY_PASSWORD }} | docker login -u ${{ secrets.EOX_REGISTRY_USER }} --password-stdin registry.gitlab.eox.at
-          docker pull ${{ env.RESOLVED_DOCKER_IMAGE }}
-      - uses: actions/checkout@v4
-      - name: Add bookbuilder environment to container
-        run: |
-          docker run --name temp-container -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.RESOLVED_DOCKER_IMAGE }} \
-            bash -c \
-              '
-              mamba run --no-capture-output -n base python -m ipykernel install --user --name base && \
-              mamba create --name bookbuilder --file .bookbuilder/conda-linux-64.lock
-              '
-          docker commit temp-container ${{ env.DOCKER_IMAGE }}:customized
-      - name: Execute notebooks using nbmake (staging / other)
-        if: env.TARGET_BRANCH_NAME == 'staging'
-        run: |
-          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
-            -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
-            -e VIRES_TOKEN_STAGING=${{ secrets.VIRES_TOKEN_STAGING }} \
-            -e VIRES_TOKEN_STAGING_DISC=${{ secrets.VIRES_TOKEN_STAGINGDISC}} \
-            ${{ env.DOCKER_IMAGE }}:customized \
-            bash -c \
-              '
-              export CDF_LIB=/opt/conda/lib && \
-              pip install --upgrade 'git+https://github.com/ESA-VirES/VirES-Python-Client@staging#egg=viresclient' && \
-              viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
-              viresclient set_token https://staging.vires.services/ows $VIRES_TOKEN_STAGING && \
-              viresclient set_token https://disc.vires.services/ows $VIRES_TOKEN_STAGING_DISC && \
-              viresclient set_default_server https://vires.services/ows && \
-              mamba run -n bookbuilder pytest --numprocesses 2 --nbmake --overwrite --nbmake-kernel=base \
-                notebooks/*.ipynb \
-                --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
-              '
-      - name: Execute notebooks using nbmake (production)
-        if: env.TARGET_BRANCH_NAME == 'master'
-        run: |
-          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root \
-            -e VIRES_TOKEN=${{ secrets.VIRES_TOKEN }} \
-            ${{ env.DOCKER_IMAGE }}:customized \
-            bash -c \
-              '
-              export CDF_LIB=/opt/conda/lib && \
-              viresclient set_token https://vires.services/ows $VIRES_TOKEN && \
-              viresclient set_default_server https://vires.services/ows && \
-              mamba run -n bookbuilder pytest --numprocesses 2 --nbmake --overwrite --nbmake-kernel=base \
-                notebooks/*.ipynb \
-                --deselect=notebooks/04c1_Geomag-Ground-Data-FTP.ipynb
-              '
+
+      - name: Build image
+        run: make image
+
+      - name: Fix workspace permissions for jovyan
+        run: chmod -R a+w $GITHUB_WORKSPACE
+
+      - name: Execute notebooks
+        env:
+          VIRES_TOKEN: ${{ secrets.VIRES_TOKEN }}
+          VIRES_TOKEN_STAGING: ${{ secrets.VIRES_TOKEN_STAGING }}
+          VIRES_TOKEN_STAGING_DISC: ${{ secrets.VIRES_TOKEN_STAGINGDISC }}
+          TARGET_BRANCH: ${{ env.TARGET_BRANCH_NAME }}
+        run: make execute
+
       - name: Build book
         if: always()
-        run: |
-          docker run -v $GITHUB_WORKSPACE:/home/jovyan -u root ${{ env.DOCKER_IMAGE }}:customized \
-            bash -c \
-              '
-              mamba run -n bookbuilder jupyter-book build --config _config-ci-${{ env.TARGET_BRANCH_NAME }}.yml .
-              '
+        run: make html
+
       - name: Deploy preview to Netlify
         if: always()
         uses: nwtgck/actions-netlify@v3.0

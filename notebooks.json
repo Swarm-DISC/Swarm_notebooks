@@ -193,9 +193,13 @@
             "name": "Multi-mission MAG",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
-            "rank": 98
-        },{
-            "path": "notebooks/03z1_External-Data.ipynb",
+            "rank": 90
+        },{            "path": "notebooks/03y2_Demo-CHAMP-MAG.ipynb",
+            "name": "CHAMP MAG",
+            "class": "viresdemo",
+            "group": "Swarm Product Demos",
+            "rank": 91
+        },{            "path": "notebooks/03z1_External-Data.ipynb",
             "name": "External data (HAPI)",
             "class": "viresdemo",
             "group": "Swarm Product Demos",
